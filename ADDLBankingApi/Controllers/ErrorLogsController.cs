@@ -12,7 +12,7 @@ using ADDLBankingApi.Models;
 
 namespace ADDLBankingApi.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class ErrorLogsController : ApiController
     {
         private ADDL_Entities db = new ADDL_Entities();
