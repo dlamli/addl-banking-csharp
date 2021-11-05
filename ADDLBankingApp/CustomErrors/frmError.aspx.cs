@@ -14,17 +14,18 @@ namespace ADDLBankingApp.CustomErrors
         protected async void Page_Load(object sender, EventArgs e)
         {
             Exception err = Session["LastError"] as Exception;
-
+               
             if(err != null)
             {
-                err = err.GetBaseException(); 
+
+                err = err.GetBaseException();
                 lblError.Text = err.Message;
                 Session["LastError"] = null;
 
                 ErrorLogManager errorLogManager = new ErrorLogManager();
                 ErrorLog errorApi = new ErrorLog()
                 {
-                    UserId = 0,
+                    UserId = Convert.ToInt32(Session["Id"]),
                     Date = DateTime.Now,
                     Page = "frmError.aspx",
                     Action = "Page_load",
@@ -32,9 +33,11 @@ namespace ADDLBankingApp.CustomErrors
                     Number = err.HResult,
                     Description = err.Message
                 };
-
-                ErrorLog errorInserted = await errorLogManager.insertErrorLog(errorApi);
+               Console.WriteLine(errorApi);
+               await errorLogManager.insertErrorLog(errorApi);
             }
+
+            
         }
     }
 }
