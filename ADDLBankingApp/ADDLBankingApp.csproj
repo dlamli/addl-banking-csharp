@@ -140,6 +140,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Assets\Images\addc-logo.png" />
+    <Content Include="Assets\Images\addl-logo-white.png" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -160,6 +162,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Login.aspx" />
+    <Content Include="Register.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -190,6 +194,23 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Views\frmCardRequest.aspx" />
+    <Content Include="Views\frmAccount.aspx" />
+    <Content Include="Views\frmCard.aspx" />
+    <Content Include="Views\frmCurrency.aspx" />
+    <Content Include="Views\frmCustomer.aspx" />
+    <Content Include="Views\frmErrorLog.aspx" />
+    <Content Include="Views\frmLoan.aspx" />
+    <Content Include="Views\frmMarchamo.aspx" />
+    <Content Include="Views\frmPayment.aspx" />
+    <Content Include="Views\frmRole.aspx" />
+    <Content Include="Views\frmService.aspx" />
+    <Content Include="Views\frmSession.aspx" />
+    <Content Include="Views\frmSinpe.aspx" />
+    <Content Include="Views\frmStadistic.aspx" />
+    <Content Include="Views\frmTimeDeposit.aspx" />
+    <Content Include="Views\frmTransfer.aspx" />
+    <Content Include="Views\frmUtility.aspx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
@@ -229,6 +250,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Managers\AccountManager.cs" />
     <Compile Include="Managers\CardManager.cs" />
     <Compile Include="Managers\CardRequestManager.cs" />
@@ -265,6 +293,13 @@
     <Compile Include="Models\Transfer.cs" />
     <Compile Include="Models\Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -285,6 +320,125 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCardRequest.aspx.cs">
+      <DependentUpon>frmCardRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmCardRequest.aspx.designer.cs">
+      <DependentUpon>frmCardRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmAccount.aspx.cs">
+      <DependentUpon>frmAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmAccount.aspx.designer.cs">
+      <DependentUpon>frmAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCard.aspx.cs">
+      <DependentUpon>frmCard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmCard.aspx.designer.cs">
+      <DependentUpon>frmCard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCurrency.aspx.cs">
+      <DependentUpon>frmCurrency.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmCurrency.aspx.designer.cs">
+      <DependentUpon>frmCurrency.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCustomer.aspx.cs">
+      <DependentUpon>frmCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmCustomer.aspx.designer.cs">
+      <DependentUpon>frmCustomer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmErrorLog.aspx.cs">
+      <DependentUpon>frmErrorLog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmErrorLog.aspx.designer.cs">
+      <DependentUpon>frmErrorLog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmLoan.aspx.cs">
+      <DependentUpon>frmLoan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmLoan.aspx.designer.cs">
+      <DependentUpon>frmLoan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmMarchamo.aspx.cs">
+      <DependentUpon>frmMarchamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmMarchamo.aspx.designer.cs">
+      <DependentUpon>frmMarchamo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmPayment.aspx.cs">
+      <DependentUpon>frmPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmPayment.aspx.designer.cs">
+      <DependentUpon>frmPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmRole.aspx.cs">
+      <DependentUpon>frmRole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmRole.aspx.designer.cs">
+      <DependentUpon>frmRole.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmService.aspx.cs">
+      <DependentUpon>frmService.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmService.aspx.designer.cs">
+      <DependentUpon>frmService.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmSession.aspx.cs">
+      <DependentUpon>frmSession.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmSession.aspx.designer.cs">
+      <DependentUpon>frmSession.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmSinpe.aspx.cs">
+      <DependentUpon>frmSinpe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmSinpe.aspx.designer.cs">
+      <DependentUpon>frmSinpe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmStadistic.aspx.cs">
+      <DependentUpon>frmStadistic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmStadistic.aspx.designer.cs">
+      <DependentUpon>frmStadistic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmTimeDeposit.aspx.cs">
+      <DependentUpon>frmTimeDeposit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmTimeDeposit.aspx.designer.cs">
+      <DependentUpon>frmTimeDeposit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmTransfer.aspx.cs">
+      <DependentUpon>frmTransfer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmTransfer.aspx.designer.cs">
+      <DependentUpon>frmTransfer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmUtility.aspx.cs">
+      <DependentUpon>frmUtility.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmUtility.aspx.designer.cs">
+      <DependentUpon>frmUtility.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

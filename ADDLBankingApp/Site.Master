@@ -12,9 +12,14 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+    <style>
+        img{
+            width:100px;
+        }
+    </style>
 </head>
 <body>
     <form runat="server">
@@ -38,25 +43,65 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
+
+        <%--navbar-fixed-top--%>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" runat="server" href="~/">Application name</a>
+                    <a class="navbar-brand" href="/Default.aspx">ADDL Banking</a>
+                    <%--<img src="Assets/Images/addl-logo-white.png" />--%>
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Management
+                <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Views/frmAccount.aspx">Account</a></li>
+                            <li><a href="/Views/frmService.aspx">Service</a></li>
+                            <li><a href="/Views/frmCurrency.aspx">Currency</a></li>
+                            <li><a href="/Views/frmCard.aspx">Card</a></li>
+                            <li><a href="/Views/frmRole.aspx">Role</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tasks
+                <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Views/frmCardRequest.aspx">Card Request</a></li>
+                            <li><a href="/Views/frmLoan.aspx">Loan</a></li>
+                            <li><a href="/Views/frmMarchamo.aspx">Marchamo</a></li>
+                            <li><a href="/Views/frmSinpe.aspx">Sinpe</a></li>
+                            <li><a href="/Views/frmTimeDeposit.aspx">Time Deposit</a></li>
+                            <li><a href="/Views/frmUtility.aspx">Utility</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports
+                <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Views/frmTransfer.aspx">Transfer</a></li>
+                            <li><a href="/Views/frmPayment.aspx">Payment</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Logs
+                <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Views/frmErrorLog.aspx">Error Log</a></li>
+                            <li><a href="/Views/frmSession.aspx">Session</a></li>
+                            <li><a href="/Views/frmStadistic.aspx">Stadistic</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <asp:LinkButton ID="lnkSignOut" OnClick="lnkSignOut_Click" runat="server">Sign out</asp:LinkButton>
+                        </li>
                     </ul>
-                </div>
             </div>
-        </div>
+        </nav>
+
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>

@@ -13,5 +13,6 @@
         public System.DateTime Birthdate { get; set; }
         public string Status { get; set; }
         public int RoleId { get; set; }
+        public string Token { get; set; }
     }
 }
