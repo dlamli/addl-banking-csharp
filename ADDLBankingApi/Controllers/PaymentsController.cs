@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Payments/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutPayment(int id, Payment payment)
+        public IHttpActionResult PutPayment(Payment payment)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != payment.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(payment).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PaymentExists(id))
+                if (!PaymentExists(payment.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(payment);
         }
 
         // POST: api/Payments

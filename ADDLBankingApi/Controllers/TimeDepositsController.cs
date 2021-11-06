@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/TimeDeposits/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTimeDeposit(int id, TimeDeposit timeDeposit)
+        public IHttpActionResult PutTimeDeposit(TimeDeposit timeDeposit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != timeDeposit.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(timeDeposit).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TimeDepositExists(id))
+                if (!TimeDepositExists(timeDeposit.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(timeDeposit);
         }
 
         // POST: api/TimeDeposits

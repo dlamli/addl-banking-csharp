@@ -38,17 +38,13 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/SinpeMs/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSinpeM(int id, SinpeM sinpeM)
+        public IHttpActionResult PutSinpeM(SinpeM sinpeM)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != sinpeM.Id)
-            {
-                return BadRequest();
-            }
 
             db.Entry(sinpeM).State = EntityState.Modified;
 
@@ -58,7 +54,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SinpeMExists(id))
+                if (!SinpeMExists(sinpeM.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +64,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(sinpeM);
         }
 
         // POST: api/SinpeMs

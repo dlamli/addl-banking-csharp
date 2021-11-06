@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Transfers/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTransfer(int id, Transfer transfer)
+        public IHttpActionResult PutTransfer(Transfer transfer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != transfer.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(transfer).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TransferExists(id))
+                if (!TransferExists(transfer.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(transfer);
         }
 
         // POST: api/Transfers
