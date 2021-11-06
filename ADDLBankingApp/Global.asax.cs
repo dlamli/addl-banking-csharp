@@ -30,6 +30,5 @@ namespace ADDLBankingApp
             Exception err = Server.GetLastError();
             Session.Add("LastError", err);
         }
-
     }
 }

@@ -63,7 +63,6 @@ namespace ADDLBankingApp.Managers
             return JsonConvert.DeserializeObject<Currency>(resp);
         }
 
-
         /// <summary>
         /// POST
         /// </summary>
@@ -91,7 +90,9 @@ namespace ADDLBankingApp.Managers
             HttpClient httpClient = GetClient(token);
 
             var resp = await httpClient.PutAsync(urlBase,
-                new StringContent(JsonConvert.SerializeObject(currency), Encoding.UTF8, "application/json"));
+                new StringContent(JsonConvert.SerializeObject(currency),
+                Encoding.UTF8,
+                "application/json"));
 
             return JsonConvert.DeserializeObject<Currency>(await resp.Content.ReadAsStringAsync());
         }
