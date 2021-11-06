@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Stadistics/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutStadistic(int id, Stadistic stadistic)
+        public IHttpActionResult PutStadistic(Stadistic stadistic)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != stadistic.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(stadistic).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StadisticExists(id))
+                if (!StadisticExists(stadistic.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(stadistic);
         }
 
         // POST: api/Stadistics

@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Utilities/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUtility(int id, Utility utility)
+        public IHttpActionResult PutUtility(Utility utility)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != utility.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(utility).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UtilityExists(id))
+                if (!UtilityExists(utility.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(utility);
         }
 
         // POST: api/Utilities

@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Currencies/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCurrency(int id, Currency currency)
+        public IHttpActionResult PutCurrency( Currency currency)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != currency.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(currency).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CurrencyExists(id))
+                if (!CurrencyExists(currency.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(currency);
         }
 
         // POST: api/Currencies

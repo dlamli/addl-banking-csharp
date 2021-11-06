@@ -38,17 +38,13 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Accounts/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAccount(int id, Account account)
+        public IHttpActionResult PutAccount(Account account)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != account.Id)
-            {
-                return BadRequest();
-            }
 
             db.Entry(account).State = EntityState.Modified;
 
@@ -58,7 +54,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AccountExists(id))
+                if (!AccountExists(account.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +64,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(account);
         }
 
         // POST: api/Accounts
@@ -79,6 +75,7 @@ namespace ADDLBankingApi.Controllers
             {
                 return BadRequest(ModelState);
             }
+
 
             db.Account.Add(account);
             db.SaveChanges();

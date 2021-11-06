@@ -38,17 +38,13 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Cards/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCard(int id, Card card)
+        public IHttpActionResult PutCard(Card card)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != card.Id)
-            {
-                return BadRequest();
-            }
 
             db.Entry(card).State = EntityState.Modified;
 
@@ -58,7 +54,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CardExists(id))
+                if (!CardExists(card.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +64,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(card);
         }
 
         // POST: api/Cards

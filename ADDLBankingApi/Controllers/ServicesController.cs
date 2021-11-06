@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutService(int id, Service service)
+        public IHttpActionResult PutService(Service service)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != service.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(service).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ServiceExists(id))
+                if (!ServiceExists(service.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,8 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(service);
+        
         }
 
         // POST: api/Services

@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Loans/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutLoan(int id, Loan loan)
+        public IHttpActionResult PutLoan(Loan loan)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != loan.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(loan).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LoanExists(id))
+                if (!LoanExists(loan.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(loan);
         }
 
         // POST: api/Loans

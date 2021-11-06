@@ -38,17 +38,13 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Roles/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutRole(int id, Role role)
+        public IHttpActionResult PutRole(Role role)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != role.Id)
-            {
-                return BadRequest();
-            }
 
             db.Entry(role).State = EntityState.Modified;
 
@@ -58,7 +54,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoleExists(id))
+                if (!RoleExists(role.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +64,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(role);
         }
 
         // POST: api/Roles

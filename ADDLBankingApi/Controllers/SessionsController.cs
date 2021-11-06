@@ -38,17 +38,13 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Sessions/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSession(int id, Session session)
+        public IHttpActionResult PutSession(Session session)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != session.Id)
-            {
-                return BadRequest();
-            }
 
             db.Entry(session).State = EntityState.Modified;
 
@@ -58,7 +54,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SessionExists(id))
+                if (!SessionExists(session.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +64,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(session);
         }
 
         // POST: api/Sessions

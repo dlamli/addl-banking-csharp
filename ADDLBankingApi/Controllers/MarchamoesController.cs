@@ -38,16 +38,11 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/Marchamoes/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutMarchamo(int id, Marchamo marchamo)
+        public IHttpActionResult PutMarchamo(Marchamo marchamo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != marchamo.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(marchamo).State = EntityState.Modified;
@@ -58,7 +53,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MarchamoExists(id))
+                if (!MarchamoExists(marchamo.Id))
                 {
                     return NotFound();
                 }
@@ -68,7 +63,7 @@ namespace ADDLBankingApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(marchamo);
         }
 
         // POST: api/Marchamoes

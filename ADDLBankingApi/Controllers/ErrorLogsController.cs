@@ -38,17 +38,13 @@ namespace ADDLBankingApi.Controllers
 
         // PUT: api/ErrorLogs/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutErrorLog(int id, ErrorLog errorLog)
+        public IHttpActionResult PutErrorLog(ErrorLog errorLog)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != errorLog.Id)
-            {
-                return BadRequest();
-            }
 
             db.Entry(errorLog).State = EntityState.Modified;
 
@@ -58,7 +54,7 @@ namespace ADDLBankingApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ErrorLogExists(id))
+                if (!ErrorLogExists(errorLog.Id))
                 {
                     return NotFound();
                 }
