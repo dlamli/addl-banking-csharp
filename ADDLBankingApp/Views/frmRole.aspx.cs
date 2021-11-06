@@ -150,7 +150,6 @@ namespace ADDLBankingApp.Views
             txtIdManagement.Visible = true;
             txtName.Visible = true;
             ltrName.Visible = true;
-            ddlStatus.Enabled = true;
             txtIdManagement.Text = string.Empty;
             txtName.Text = string.Empty;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -158,7 +157,30 @@ namespace ADDLBankingApp.Views
 
         protected void gvRole_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int index = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvRole.Rows[index];
+            init();
+            switch (e.CommandName)
+            {
+                case "editRole":
+                    ltrTitleManagement.Text = "Edit Role";
+                    btnConfirmManagement.ControlStyle.CssClass = "btn btn-primary";
+                    txtIdManagement.Text = row.Cells[0].Text.Trim();
+                    txtName.Text = row.Cells[1].Text.Trim();
+                    btnConfirmManagement.Visible = true;
+                    ScriptManager.RegisterStartupScript(this,
+                this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
+                    break;
 
+                case "removeRole":
+                    _id = row.Cells[0].Text.Trim();
+                    ltrModalMsg.Text = "Are you sure want to remove this role?";
+                    ScriptManager.RegisterStartupScript(this,
+               this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

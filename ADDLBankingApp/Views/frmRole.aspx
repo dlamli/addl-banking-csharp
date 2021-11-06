@@ -131,22 +131,7 @@
                                     runat="server"
                                     CssClass="form-control" />
                         </tr>
-                        <tr>
-                            <td>
-                                <asp:Literal
-                                    Text="Status"
-                                    runat="server" />
-                            </td>
-                            <td>
-                                <asp:DropDownList
-                                    ID="ddlStatus"
-                                    CssClass="form-control"
-                                    runat="server">
-                                    <asp:ListItem Value="1">Active</asp:ListItem>
-                                    <asp:ListItem Value="0">Inactive</asp:ListItem>
-                                </asp:DropDownList>
-                            </td>
-                        </tr>
+
                     </table>
                     <asp:Label 
                         ID="lblResult"

@@ -107,7 +107,7 @@ namespace ADDLBankingApp.Views
                     CardId = Convert.ToInt32(ddlCard.SelectedValue),
                     Description = txtDescription.Text,
                     IBAN = txtIban.Text,
-                    Balance = Convert.ToDecimal(txtBalance.Text),
+                    Balance = Convert.ToInt32(txtBalance.Text),
                     Status = ddlStatus.SelectedValue,
                     PhoneNumber = txtPhoneNumber.Text
                 };
@@ -137,12 +137,12 @@ namespace ADDLBankingApp.Views
                 {
                     Id = Convert.ToInt32(txtIdManagement.Text),
                     UserId =Convert.ToInt32(ddlUser.SelectedValue),
-                    CurrencyId = Convert.ToInt32(ddlUser.SelectedValue),
+                    CurrencyId = Convert.ToInt32(ddlCurrency.SelectedValue),
+                    CardId = Convert.ToInt32(ddlCard.SelectedValue),
                     Description = txtDescription.Text,
                     IBAN = txtIban.Text,
-                    Balance = Convert.ToDecimal(txtBalance.Text),
+                    Balance = Convert.ToInt32(txtBalance.Text),
                     Status = ddlStatus.SelectedValue,
-                    CardId = Convert.ToInt32(ddlCard.SelectedValue),
                     PhoneNumber = txtPhoneNumber.Text
                 };
 

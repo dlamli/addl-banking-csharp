@@ -241,6 +241,7 @@
                                 <asp:TextBox
                                     ID="txtPhoneNumber"
                                     runat="server"
+                                    MaxLength="8"
                                     CssClass="form-control" />
                                 <asp:RegularExpressionValidator
                                     runat="server"
