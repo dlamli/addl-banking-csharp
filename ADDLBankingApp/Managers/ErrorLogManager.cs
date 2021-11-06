@@ -18,6 +18,13 @@ namespace ADDLBankingApp.Managers
         /// </summary>
         string urlBase = "http://localhost:49220/api/ErrorLogs/";
 
+        HttpClient GetErrorLog()
+        {
+            HttpClient httpClient = new HttpClient();
+
+            return httpClient;
+        }
+
         /// <summary>
         /// GET
         /// </summary>
@@ -25,7 +32,7 @@ namespace ADDLBankingApp.Managers
         /// <returns></returns>
         public async Task<IEnumerable<ErrorLog>> GetAllErrorLog()
         {
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = GetErrorLog();
 
             var resp = await httpClient.GetStringAsync(urlBase);
 
