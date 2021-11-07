@@ -19,6 +19,7 @@ namespace ADDLBankingApp.Views
         IEnumerable<Account> accounts = new ObservableCollection<Account>();
         AccountManager accountManager = new AccountManager();
 
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -248,6 +249,7 @@ namespace ADDLBankingApp.Views
                 case "removeAccount":
                     lblIdRemove.Text = row.Cells[0].Text;
                     ltrModalMsg.Text = "Are you sure you want to delete account #" + lblIdRemove.Text + "?";
+
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
