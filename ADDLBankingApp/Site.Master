@@ -59,6 +59,8 @@
                             <li><a href="/Views/frmCurrency.aspx">Currency</a></li>
                             <li><a href="/Views/frmCard.aspx">Card</a></li>
                             <li><a href="/Views/frmRole.aspx">Role</a></li>
+                            <li><a href="/Views/frmCustomer.aspx">Customer</a></li>
+
                         </ul>
                     </li>
                     <li class="dropdown">

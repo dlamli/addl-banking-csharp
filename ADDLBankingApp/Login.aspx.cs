@@ -35,7 +35,7 @@ namespace ADDLBankingApp
                         Session["Id"] = customer.Id;
                         Session["Identification"] = customer.Identification;
                         Session["Name"] = customer.Name;
-                        Session["Status"] = customer.Name;
+                        Session["Status"] = customer.Status;
                         Session["Token"] = customer.Token;
 
                         FormsAuthentication.RedirectFromLoginPage(customer.Username, false);

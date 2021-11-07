@@ -18,7 +18,6 @@ namespace ADDLBankingApp.Views
     {
         IEnumerable<Account> accounts = new ObservableCollection<Account>();
         AccountManager accountManager = new AccountManager();
-        static string _id = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -176,7 +175,7 @@ namespace ADDLBankingApp.Views
         {
             try
             {
-                Account account = await accountManager.deleteAccount(_id, Session["Token"].ToString());
+                Account account = await accountManager.deleteAccount(lblIdRemove.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(account.Description))
                 {
                     ltrModalMsg.Text = "Account deleted";
@@ -247,8 +246,8 @@ namespace ADDLBankingApp.Views
                     break;
 
                 case "removeAccount":
-                    _id  = row.Cells[0].Text.Trim();
-                    ltrModalMsg.Text = "Are you sure want to remove this account?";
+                    lblIdRemove.Text = row.Cells[0].Text;
+                    ltrModalMsg.Text = "Are you sure you want to delete account #" + lblIdRemove.Text + "?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
