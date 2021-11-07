@@ -17,6 +17,14 @@ namespace ADDLBankingApp.Managers
         /// </summary>
         string urlBase = "http://localhost:49220/api/Stadistics/";
 
+
+        HttpClient GetStadistic()
+        {
+            HttpClient httpClient = new HttpClient();
+
+            return httpClient;
+        }
+
         /// <summary>
         /// GET
         /// </summary>
@@ -24,7 +32,7 @@ namespace ADDLBankingApp.Managers
         /// <returns></returns>
         public async Task<IEnumerable<Stadistic>> GetAllStadistic()
         {
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = GetStadistic();
 
             var resp = await httpClient.GetStringAsync(urlBase);
 

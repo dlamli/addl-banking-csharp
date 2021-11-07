@@ -11,7 +11,10 @@ namespace ADDLBankingApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
+            }
         }
     }
 }
