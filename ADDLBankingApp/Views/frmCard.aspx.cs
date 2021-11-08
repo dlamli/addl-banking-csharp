@@ -79,7 +79,6 @@ namespace ADDLBankingApp.Views
                     renderModalMessage("Card created");
                     init();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -107,7 +106,6 @@ namespace ADDLBankingApp.Views
                     renderModalMessage("Card updated");
                     init();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {

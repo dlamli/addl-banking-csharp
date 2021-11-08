@@ -2,6 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+        <!-- Bootstrap -->
+    <!-- Bootstrap DatePicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
+
     <script type="text/javascript">
         function openModal() {
             $('#myModal').modal('show'); //ventana de mensajes
@@ -18,6 +23,23 @@
         function CloseManagement() {
             $('#myModalManagement').modal('hide'); //cierra ventana de mantenimiento
         }
+
+        function openModalMsg() {
+            $('#myModalMsg').modal('show'); //ventana de mensajes
+        }
+
+        function CloseModalMsg() {
+            $('#myModalMsg').modal('hide');//cierra ventana de mensajes
+        }
+
+        $(function () {
+            $('[id*=txtRequestDate]').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "yyyy/mm/dd",
+                language: "tr"
+            });
+        });
 
         $(document).ready(function () { //filtrar el datagridview
             $("#myInput").on("keyup", function () {
@@ -82,6 +104,7 @@
         runat="server"
         Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
         OnClick="btnNew_Click"
+        CausesValidation="false"
         />
     <asp:Label
         ID="lblStatus"
@@ -152,7 +175,19 @@
                                 <asp:TextBox ID="txtRequestDate"
                                     runat="server" 
                                     CssClass="form-control"
+                                    Enabled="false"
+                                    ReadOnly="true"
                                     ></asp:TextBox>
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvRequestDate" 
+                                    runat="server"
+                                    ForeColor="Red"
+                                    ControlToValidate="txtRequestDate" 
+                                    EnableClientScript="true"
+                                    ErrorMessage="Request Date is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator> 
                             </td> 
                         </tr>
                         
@@ -212,12 +247,14 @@
                         CssClass="btn btn-success"
                         ID="btnConfirmModal"
                         OnClick="btnConfirmModal_Click"
+                        CausesValidation="false"
                         runat="server"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm" />
                     <asp:LinkButton
                         type="button"
                         CssClass="btn btn-danger"
                         ID="btnCancelModal"
+                        CausesValidation="false"
                         OnClick="btnCancelModal_Click"
                         runat="server"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel" />
@@ -226,7 +263,38 @@
         </div>
     </div>
 
-
+    <%--Modal Message--%>
+    <div id="myModalMsg" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">System Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <asp:Literal
+                            ID="ltrModalMessage"
+                            runat="server" />
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton
+                        type="button"
+                        CssClass="btn btn-success"
+                        ID="btnModalMessage"
+                        OnClick="btnModalMessage_Click"
+                        runat="server"
+                        CausesValidation="false"
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Continue" />
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

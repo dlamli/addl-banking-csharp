@@ -75,6 +75,8 @@ namespace ADDLBankingApp.Views
                 case "editCardRequest":
                     ltrTitleManagement.Text = "Edit Card Request";
                     btnConfirmManagement.ControlStyle.CssClass = "btn btn-primary";
+                    txtRequestDate.Enabled = true;
+                    txtRequestDate.ReadOnly = false;
                     txtIdManagement.Text = row.Cells[0].Text.Trim();
                     txtRequestDate.Text = row.Cells[2].Text.Trim();
                     btnConfirmManagement.Visible = true;
@@ -84,7 +86,7 @@ namespace ADDLBankingApp.Views
 
                 case "removeCardRequest":
                     _id = row.Cells[0].Text.Trim();
-                    ltrModalMsg.Text = "Are you sure want to remove this utility?";
+                    ltrModalMsg.Text = "Are you sure want to remove card request #" + _id  +" ?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
@@ -99,6 +101,7 @@ namespace ADDLBankingApp.Views
             ltrTitleManagement.Text = "New Card Request";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
             btnConfirmManagement.Visible = true;
+            txtIdManagement.Text = string.Empty;
             txtIdManagement.Visible = true;
             txtRequestDate.Visible = true;
             txtRequestDate.Text = DateTime.Now.ToString();
@@ -119,13 +122,8 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(cardRequestInserted.AccountId.ToString()))
                 {
-                    lblResult.Text = "Card Request created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Card request created");
                     init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -147,13 +145,9 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(cardRequestUpdated.AccountId.ToString()))
                 {
-                    lblResult.Text = "CardRequest updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Card Request updated");
                     init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
+                    txtRequestDate.Enabled = false;
                 }
                 else
                 {
@@ -176,9 +170,7 @@ namespace ADDLBankingApp.Views
                 Models.CardRequest cardRequest = await cardRequestManager.deleteCardRequest(_id, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(cardRequest.AccountId.ToString()))
                 {
-                    ltrModalMsg.Text = "CardRequest deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Card Request deleted");
                     init();
                 }
             }
@@ -202,6 +194,17 @@ namespace ADDLBankingApp.Views
         protected void btnCancelModal_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModal(); });", true);
+        }
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }
