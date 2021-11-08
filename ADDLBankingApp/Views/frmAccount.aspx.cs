@@ -18,8 +18,9 @@ namespace ADDLBankingApp.Views
     {
         IEnumerable<Account> accounts = new ObservableCollection<Account>();
         AccountManager accountManager = new AccountManager();
+
         string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
-        //List<Account> accountList = new List<Account>();
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,6 +31,7 @@ namespace ADDLBankingApp.Views
                 {
                     init();
                    
+
 
                     using (SqlConnection conn = new SqlConnection(connString))
                     {

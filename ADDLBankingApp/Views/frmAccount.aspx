@@ -20,6 +20,7 @@
             $('#myModal').modal('hide');//cierra ventana de mensajes
         }
 
+
         function CloseModalMsg() {
             $('#myModalMsg').modal('hide');//cierra ventana de mensajes
         }
@@ -199,6 +200,7 @@
                                     Text="Description"
                                     runat="server" />
                                 </td>
+
                             <td>
                                 <asp:TextBox
                                     ID="txtDescription"
@@ -223,6 +225,7 @@
                                     runat="server" />
                             </td>
                             <td>
+
 
                                 <asp:TextBox
                                     ID="txtIban"
@@ -392,6 +395,7 @@
 
 
 
+
     <%--Modal Message--%>
     <div id="myModalMsg" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -423,7 +427,6 @@
             </div>
         </div>
     </div>
-
 
 
 

@@ -159,7 +159,6 @@
                                     ID="txtName"
                                     runat="server"
                                     CssClass="form-control" />
-
                                 <asp:RequiredFieldValidator 
                                     ID="rfvName" 
                                     runat="server"
@@ -181,7 +180,6 @@
                                     ID="txtAmount"
                                     runat="server"
                                     CssClass="form-control" />
-
                                 <asp:RequiredFieldValidator 
                                     ID="rfvAmount" 
                                     runat="server"
@@ -203,7 +201,6 @@
                                     ID="txtNumberPlate"
                                     runat="server"
                                     CssClass="form-control" />
-
                                 <asp:RequiredFieldValidator 
                                     ID="rfvNumberPlate" 
                                     runat="server"

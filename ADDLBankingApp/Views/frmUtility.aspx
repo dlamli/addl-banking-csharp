@@ -122,7 +122,6 @@
                                     Enabled="false"
                                     CssClass="form-control" />
                             </td>
-   
                         </tr>                    
                         <tr>
                             <td>
@@ -157,8 +156,6 @@
                             ErrorMessage="ProfitPercentage is required"
                             ControlToValidate="txtProfitPercentage"
                             />
-
-
                         </tr>
 
                     </table>

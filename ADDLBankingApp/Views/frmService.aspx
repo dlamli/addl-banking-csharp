@@ -134,7 +134,6 @@
                                     ID="txtDescription"
                                     runat="server"
                                     CssClass="form-control" />
-
                                 <asp:RequiredFieldValidator 
                             ID="rfvDescription" 
                             runat="server" 

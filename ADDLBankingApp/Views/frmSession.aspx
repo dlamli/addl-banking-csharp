@@ -160,7 +160,6 @@
                                     ID="txtDateStart"
                                     runat="server"
                                     CssClass="form-control" />
-
                                 <asp:RequiredFieldValidator 
                             ID="rfvDateStart" 
                             runat="server" 
