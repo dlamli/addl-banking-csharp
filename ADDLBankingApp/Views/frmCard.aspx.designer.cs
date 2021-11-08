@@ -105,22 +105,22 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.TextBox txtCardNumber;
 
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// rfvCardNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCardNumber;
 
         /// <summary>
-        /// RegularExpressionValidator2 control.
+        /// revCardNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revCardNumber;
 
         /// <summary>
         /// ltrCCV control.
@@ -141,22 +141,24 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.TextBox txtCCV;
 
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// rfvCCV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCCV;
 
         /// <summary>
-        /// RegularExpressionValidator1 control.
+        /// revCCV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
+
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revCCV;
 
         /// <summary>
         /// ltrDate control.
@@ -177,13 +179,13 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.TextBox txtDueDate;
 
         /// <summary>
-        /// rfvBirthdate control.
+        /// rfvDueDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBirthdate;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDueDate;
 
         /// <summary>
         /// ltrProvider control.
@@ -204,13 +206,13 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.TextBox txtProvider;
 
         /// <summary>
-        /// RequiredFieldValidator3 control.
+        /// rfvProvider control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProvider;
 
         /// <summary>
         /// lblResult control.
@@ -274,5 +276,23 @@ namespace ADDLBankingApp.Views
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCancelModal;
+
+        /// <summary>
+        /// ltrModalMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrModalMessage;
+
+        /// <summary>
+        /// btnModalMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnModalMessage;
     }
 }

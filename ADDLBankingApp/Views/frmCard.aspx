@@ -36,6 +36,14 @@
             $('#myModalManagement').modal('hide'); //cierra ventana de mantenimiento
         }
 
+        function openModalMsg() {
+            $('#myModalMsg').modal('show'); //ventana de mensajes
+        }
+
+        function CloseModalMsg() {
+            $('#myModalMsg').modal('hide');//cierra ventana de mensajes
+        }
+
         $(document).ready(function () { //filtrar el datagridview
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
@@ -109,7 +117,8 @@
         CssClass="btn btn-success"
         runat="server"
         Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
-        OnClick="btnNew_Click" />
+        OnClick="btnNew_Click"
+        CausesValidation="false"/>
     <asp:Label
         ID="lblStatus"
         ForeColor="#FFF7F7"
@@ -180,20 +189,25 @@
                                     ID="txtCardNumber"
                                     runat="server"
                                     CssClass="form-control"
-                                    MaxLength="16" />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
-                                    ForeColor="Red"
-                                    ErrorMessage="CardNumber is required"
-                                    ControlToValidate="txtCardNumber" 
-                                    EnableClientScript="False"
-                                    ></asp:RequiredFieldValidator>     
-                                <asp:RegularExpressionValidator
+                                    MaxLength="16"/>
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvCardNumber" 
                                     runat="server"
-                                    ID="RegularExpressionValidator2"
+                                    ForeColor="Red"
+                                    ControlToValidate="txtCardNumber" 
+                                    EnableClientScript="true"
+                                    ErrorMessage="Card Number is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>   
+                                <asp:RegularExpressionValidator
+                                    ID="revCardNumber"
+                                    runat="server"
+                                    ForeColor="Red"
                                     ControlToValidate="txtCardNumber"
                                     ValidationExpression="^\d+$"
                                     EnableClientScript="true"
-                                    ErrorMessage="Please enter numbers only"
+                                    ErrorMessage="Please enter number only"
                                     Display="Dynamic"
                                     SetFocusOnError="True" />
                             </td>
@@ -212,19 +226,26 @@
                                     CssClass="form-control"
                                     MaxLength="3"
                                     />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
-                                    ForeColor="Red"
-                                    ErrorMessage="CardNumber is required"
-                                    ControlToValidate="txtCardNumber" 
-                                    EnableClientScript="False"
-                                    ></asp:RequiredFieldValidator>   
-                                <asp:RegularExpressionValidator 
-                                    ID="RegularExpressionValidator1" 
-                                    ControlToValidate="txtCardNumber" 
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvCCV" 
                                     runat="server"
                                     ForeColor="Red"
-                                    ErrorMessage="Only Numbers allowed" 
-                                    ValidationExpression="\d+" />
+                                    ControlToValidate="txtCCV" 
+                                    EnableClientScript="true"
+                                    ErrorMessage="CCV is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>   
+                                <asp:RegularExpressionValidator
+                                    ID="revCCV"
+                                    runat="server"
+                                    ForeColor="Red"
+                                    ControlToValidate="txtCCV"
+                                    ValidationExpression="^\d+$"
+                                    EnableClientScript="true"
+                                    ErrorMessage="Please enter number only"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" />
                            </td>
                         </tr>
                         <tr>
@@ -235,13 +256,20 @@
                                     runat="server" />
                             </td>
                             <td>
-                                <asp:TextBox ID="txtDueDate" runat="server" CssClass="form-control"></asp:TextBox>
-                                 <asp:RequiredFieldValidator ID="rfvBirthdate" runat="server"
+                                <asp:TextBox ID="txtDueDate" 
+                                    runat="server" 
+                                    CssClass="form-control"
+                                    ></asp:TextBox>
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvDueDate" 
+                                    runat="server"
                                     ForeColor="Red"
-                                    ErrorMessage="DueDate is required"
                                     ControlToValidate="txtDueDate" 
-                                    EnableClientScript="False"
-                                    />      
+                                    EnableClientScript="true"
+                                    ErrorMessage="DueDate is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>   
                             </td>        
                         </tr>
                         <tr>
@@ -257,12 +285,16 @@
                                     MaxLength="50"
                                     runat="server"
                                     CssClass="form-control" />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvProvider" 
+                                    runat="server"
                                     ForeColor="Red"
-                                    ErrorMessage="Provider is required"
                                     ControlToValidate="txtProvider" 
-                                    EnableClientScript="False"
-                                    ></asp:RequiredFieldValidator>   
+                                    EnableClientScript="true"
+                                    ErrorMessage="Provider is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>
                             </td>
                         </tr>
                     </table>
@@ -323,6 +355,7 @@
                         ID="btnConfirmModal"
                         OnClick="btnConfirmModal_Click"
                         runat="server"
+                        CausesValidation="false"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm" />
                     <asp:LinkButton
                         type="button"
@@ -330,13 +363,44 @@
                         ID="btnCancelModal"
                         OnClick="btnCancelModal_Click"
                         runat="server"
+                        CausesValidation="false"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel" />
                 </div>
             </div>
         </div>
     </div>
-
-
+     <%--Modal Message--%>
+    <div id="myModalMsg" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">System Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <asp:Literal
+                            ID="ltrModalMessage"
+                            runat="server" />
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton
+                        type="button"
+                        CssClass="btn btn-success"
+                        ID="btnModalMessage"
+                        OnClick="btnModalMessage_Click"
+                        runat="server"
+                        CausesValidation="false"
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Continue" />
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

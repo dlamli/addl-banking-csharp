@@ -45,9 +45,15 @@ namespace ADDLBankingApp.Views
         {
             ltrTitleManagement.Text = "New Card";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
-            btnConfirmManagement.Visible = true;
-            txtCardNumber.Visible = true;
             txtIdManagement.Visible = true;
+            txtCardNumber.Visible = true;
+            txtCCV.Visible = true;
+            txtProvider.Visible = true;
+            btnConfirmManagement.Visible = true;
+            txtIdManagement.Text = string.Empty;
+            txtCardNumber.Text = txtCardNumber.Text;
+            txtCardNumber.Text = string.Empty;
+            txtCCV.Text = string.Empty;
             txtProvider.Text = string.Empty;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModalManagement(); } );", true);
         }
@@ -69,10 +75,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(Convert.ToString(cardInserted.CardNumber)))
                 {
-                    lblResult.Text = "Card created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Card created");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -100,10 +103,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(Convert.ToString(cardUpdated.CardNumber)))
                 {
-                    lblResult.Text = "Card updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Card updated");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -130,9 +130,7 @@ namespace ADDLBankingApp.Views
                 if (!string.IsNullOrEmpty(Convert.ToString(card.CardNumber)))
                 {
                     lblIdRemove.Text = string.Empty;
-                    ltrModalMsg.Text = "Card removed";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Card removed");
                     init();
                 }
             }
@@ -154,6 +152,7 @@ namespace ADDLBankingApp.Views
             }
         }
 
+
         protected void btnCancelModal_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModal(); });", true);
@@ -173,12 +172,14 @@ namespace ADDLBankingApp.Views
                     txtIdManagement.Text = row.Cells[0].Text.Trim();
                     txtCardNumber.Text = row.Cells[2].Text.Trim();
                     txtCCV.Text = row.Cells[3].Text.Trim();
+                    txtDueDate.Text = row.Cells[4].Text.Trim();
                     txtProvider.Text = row.Cells[5].Text.Trim();
                     btnConfirmManagement.Visible = true;
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModalManagement(); } );", true);
                     break;
                 case "removeCard":
                     lblIdRemove.Text = row.Cells[0].Text;
+                    lblIdRemove.Visible = false;
                     ltrModalMsg.Text = "Are you sure you want to delete card #" + lblIdRemove.Text + "?";
                     ScriptManager.RegisterStartupScript(this,
                         this.GetType(), "LaunchServerSide", "$(function() { openModal(); } );", true);
@@ -187,6 +188,17 @@ namespace ADDLBankingApp.Views
                     break;
             }
 
+        }
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }
