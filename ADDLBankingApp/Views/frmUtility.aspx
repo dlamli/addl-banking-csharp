@@ -20,6 +20,14 @@
             $('#myModalManagement').modal('hide'); //cierra ventana de mantenimiento
         }
 
+        function openModalMsg() {
+            $('#myModalMsg').modal('show'); //ventana de mensajes
+        }
+
+        function CloseModalMsg() {
+            $('#myModalMsg').modal('hide');//cierra ventana de mensajes
+        }
+
         $(document).ready(function () { //filtrar el datagridview
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
@@ -82,6 +90,7 @@
         runat="server"
         Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
         OnClick="btnNew_Click"
+        CausesValidation="false"
         />
     <asp:Label
         ID="lblStatus"
@@ -151,14 +160,25 @@
                                     MaxLength="2"
                                     CssClass="form-control" />
                                 <asp:RequiredFieldValidator 
-                            ID="rfvProfitPercentage" 
-                            runat="server" 
-                            ForeColor="Maroon"
-                            ErrorMessage="ProfitPercentage is required"
-                            ControlToValidate="txtProfitPercentage"
-                            />
-
-
+                                    ID="rfvProfitPercentage" 
+                                    runat="server"
+                                    ForeColor="Red"
+                                    ControlToValidate="txtProfitPercentage" 
+                                    EnableClientScript="true"
+                                    ErrorMessage="ProfitPercentage is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>   
+                                <asp:RegularExpressionValidator
+                                    ID="revProfitPercentage"
+                                    runat="server"
+                                    ForeColor="Red"
+                                    ControlToValidate="txtProfitPercentage"
+                                    ValidationExpression="^\d+$"
+                                    EnableClientScript="true"
+                                    ErrorMessage="Please enter number only"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" />
                         </tr>
 
                     </table>
@@ -222,6 +242,7 @@
                         ID="btnConfirmModal"
                         OnClick="btnConfirmModal_Click"
                         runat="server" 
+                        CausesValidation="false"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm"
                         />
                     <asp:LinkButton 
@@ -230,11 +251,47 @@
                         ID="btnCancelModal"
                         OnClick="btnCancelModal_Click" 
                         runat="server"
+                        CausesValidation="false"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel" 
                         />
                 </div>
             </div>
         </div>
     </div>
+
+     <%--Modal Message--%>
+    <div id="myModalMsg" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">System Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <asp:Literal
+                            ID="ltrModalMessage"
+                            runat="server" />
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton
+                        type="button"
+                        CssClass="btn btn-success"
+                        ID="btnModalMessage"
+                        OnClick="btnModalMessage_Click"
+                        runat="server"
+                        CausesValidation="false"
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Continue" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 </asp:Content>
