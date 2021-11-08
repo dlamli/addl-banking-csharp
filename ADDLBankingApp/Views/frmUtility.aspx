@@ -149,7 +149,13 @@
                                     runat="server"
                                     MaxLength="2"
                                     CssClass="form-control" />
-
+                                <asp:RequiredFieldValidator 
+                            ID="rfvProfitPercentage" 
+                            runat="server" 
+                            ForeColor="Maroon"
+                            ErrorMessage="ProfitPercentage is required"
+                            ControlToValidate="txtProfitPercentage"
+                            />
                         </tr>
 
                     </table>

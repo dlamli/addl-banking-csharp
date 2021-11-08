@@ -125,13 +125,20 @@
                                     ID="ltrName"
                                     Text="Name"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtName"
                                     runat="server"
                                     CssClass="form-control" />
+                                <asp:RequiredFieldValidator ID="rfvName" runat="server"
+                                    ForeColor="Red"
+                                    ErrorMessage="Name is required"
+                                    ControlToValidate="txtName" 
+                                    EnableClientScript="False"
+                                    ></asp:RequiredFieldValidator>
+                            </td>
                         </tr>
-
                     </table>
                     <asp:Label 
                         ID="lblResult"

@@ -174,12 +174,19 @@
                                     ID="ltrCard"
                                     Text="CardNumber"
                                     runat="server" />
+                            </td>
                             <td>
-                                <asp:TextBox
+                                 <asp:TextBox
                                     ID="txtCardNumber"
                                     runat="server"
                                     CssClass="form-control"
                                     MaxLength="16" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                                    ForeColor="Red"
+                                    ErrorMessage="CardNumber is required"
+                                    ControlToValidate="txtCardNumber" 
+                                    EnableClientScript="False"
+                                    ></asp:RequiredFieldValidator>     
                                 <asp:RegularExpressionValidator
                                     runat="server"
                                     ID="RegularExpressionValidator2"
@@ -189,6 +196,7 @@
                                     ErrorMessage="Please enter numbers only"
                                     Display="Dynamic"
                                     SetFocusOnError="True" />
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -196,6 +204,7 @@
                                     ID="ltrCCV"
                                     Text="CCV"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtCCV"
@@ -203,15 +212,20 @@
                                     CssClass="form-control"
                                     MaxLength="3"
                                     />
-                                <asp:RegularExpressionValidator
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
+                                    ForeColor="Red"
+                                    ErrorMessage="CardNumber is required"
+                                    ControlToValidate="txtCardNumber" 
+                                    EnableClientScript="False"
+                                    ></asp:RequiredFieldValidator>   
+                                <asp:RegularExpressionValidator 
+                                    ID="RegularExpressionValidator1" 
+                                    ControlToValidate="txtCardNumber" 
                                     runat="server"
-                                    ID="RegularExpressionValidator3"
-                                    ControlToValidate="txtCCV"
-                                    ValidationExpression="^\d+$"
-                                    EnableClientScript="true"
-                                    ErrorMessage="Please enter numbers only"
-                                    Display="Dynamic"
-                                    SetFocusOnError="True" />
+                                    ForeColor="Red"
+                                    ErrorMessage="Only Numbers allowed" 
+                                    ValidationExpression="\d+" />
+                           </td>
                         </tr>
                         <tr>
                             <td>
@@ -222,13 +236,13 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtDueDate" runat="server" CssClass="form-control"></asp:TextBox>
-                            </td>
-                                <asp:RequiredFieldValidator ID="rfvBirthdate" runat="server"
+                                 <asp:RequiredFieldValidator ID="rfvBirthdate" runat="server"
                                     ForeColor="Red"
-                                    ErrorMessage="DudeDate is required"
+                                    ErrorMessage="DueDate is required"
                                     ControlToValidate="txtDueDate" 
                                     EnableClientScript="False"
-                                    ></asp:RequiredFieldValidator>      
+                                    />      
+                            </td>        
                         </tr>
                         <tr>
                             <td>
@@ -243,6 +257,12 @@
                                     MaxLength="50"
                                     runat="server"
                                     CssClass="form-control" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                                    ForeColor="Red"
+                                    ErrorMessage="Provider is required"
+                                    ControlToValidate="txtProvider" 
+                                    EnableClientScript="False"
+                                    ></asp:RequiredFieldValidator>   
                             </td>
                         </tr>
                     </table>

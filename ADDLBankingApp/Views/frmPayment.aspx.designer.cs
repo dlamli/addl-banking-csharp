@@ -141,6 +141,15 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.TextBox txtAmount;
 
         /// <summary>
+        /// rfvAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAmount;
+
+        /// <summary>
         /// lblResult control.
         /// </summary>
         /// <remarks>

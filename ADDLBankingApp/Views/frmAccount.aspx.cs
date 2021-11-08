@@ -19,6 +19,8 @@ namespace ADDLBankingApp.Views
         IEnumerable<Account> accounts = new ObservableCollection<Account>();
         AccountManager accountManager = new AccountManager();
 
+        string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,7 +30,8 @@ namespace ADDLBankingApp.Views
                 else
                 {
                     init();
-                    string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
+                   
+
 
                     using (SqlConnection conn = new SqlConnection(connString))
                     {
@@ -75,7 +78,6 @@ namespace ADDLBankingApp.Views
                         }
                     }
                     
-
                 }
 
             }
@@ -89,81 +91,122 @@ namespace ADDLBankingApp.Views
                 gvAccount.DataSource = accounts.ToList();
                 gvAccount.DataBind();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                
                 lblStatus.Text = "An error ocurred  to load account list.";
                 lblStatus.Visible = true;
+                ErrorLogManager errorManager = new ErrorLogManager();
+                ErrorLog error = new ErrorLog()
+                {
+                    UserId = Convert.ToInt32(Session["Id"].ToString()),
+                    Date = DateTime.Now,
+                    Source = ex.Source,
+                    Number = ex.HResult,
+                    Description = ex.Message,
+                    Page = "frmAccount.aspx",
+                    Action = "init",
+                };
+                await errorManager.insertErrorLog(error);
             }
+        }
+
+        public bool checkExistAccount(string IBAN, int cardId)
+        {
+            bool accountExist = false;
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                using(SqlCommand cmd = new SqlCommand("CheckAccountCreation", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IBAN", IBAN.Trim());
+                    cmd.Parameters.AddWithValue("@cardId", cardId);
+                    conn.Open();
+                    accountExist = Convert.ToBoolean(cmd.ExecuteScalar());
+                }
+            }
+
+            return accountExist;
+
         }
 
         protected async void btnConfirmManagement_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtIdManagement.Text)) //Insert
+            try
             {
-                Account account = new Account()
+                if (string.IsNullOrEmpty(txtIdManagement.Text)) //Insert
                 {
-                    UserId = Convert.ToInt32(ddlUser.SelectedValue),
-                    CurrencyId = Convert.ToInt32(ddlCurrency.SelectedValue),
-                    CardId = Convert.ToInt32(ddlCard.SelectedValue),
-                    Description = txtDescription.Text,
-                    IBAN = txtIban.Text,
-                    Balance = Convert.ToInt32(txtBalance.Text),
-                    Status = ddlStatus.SelectedValue,
-                    PhoneNumber = txtPhoneNumber.Text
-                };
+                    if (checkExistAccount(txtIban.Text, Convert.ToInt32(ddlCard.SelectedValue)))
+                    {
+                        Account account = new Account()
+                        {
+                            UserId = Convert.ToInt32(ddlUser.SelectedValue),
+                            CurrencyId = Convert.ToInt32(ddlCurrency.SelectedValue),
+                            CardId = Convert.ToInt32(ddlCard.SelectedValue),
+                            Description = txtDescription.Text,
+                            IBAN = txtIban.Text,
+                            Balance = Convert.ToInt32(txtBalance.Text),
+                            Status = ddlStatus.SelectedValue,
+                            PhoneNumber = txtPhoneNumber.Text
+                        };
 
-                Account accountInserted = await accountManager.insertAccount(account, Session["Token"].ToString());
+                        Account accountInserted = await accountManager.insertAccount(account, Session["Token"].ToString());
 
-                if (!string.IsNullOrEmpty(accountInserted.Description))
-                {
-                    lblResult.Text = "Account created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
-                    init();
+                        if (!string.IsNullOrEmpty(accountInserted.Description))
+                        {
+                            renderModalMessage("Account created");
+                            init();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
+                        }
+                        else
+                        {
+                            lblResult.Text = "An error ocurred to do this action.";
+                            lblResult.Visible = true;
+                            lblResult.ForeColor = Color.Red;
+                        }
+                    }
+                    else // Account exist
+                    {
+                        renderModalMessage("Account already exist");
+                    }
                 }
-                else
+                else // Edit
                 {
-                    lblResult.Text = "An error ocurred to do this action.";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Red;
+                    Account account = new Account()
+                    {
+                        Id = Convert.ToInt32(txtIdManagement.Text),
+                        UserId = Convert.ToInt32(ddlUser.SelectedValue),
+                        CurrencyId = Convert.ToInt32(ddlCurrency.SelectedValue),
+                        CardId = Convert.ToInt32(ddlCard.SelectedValue),
+                        Description = txtDescription.Text,
+                        IBAN = txtIban.Text,
+                        Balance = Convert.ToInt32(txtBalance.Text),
+                        Status = ddlStatus.SelectedValue,
+                        PhoneNumber = txtPhoneNumber.Text
+                    };
+
+                    Account accountUpdated = await accountManager.updateAccount(account, Session["Token"].ToString());
+
+                    if (!string.IsNullOrEmpty(accountUpdated.Description))
+                    {
+                       
+                        renderModalMessage("Account Updated");
+                        init();
+
+                    }
+                    else
+                    {
+                        lblResult.Text = "An error ocurred to do this action.";
+                        lblResult.Visible = true;
+                        lblResult.ForeColor = Color.Red;
+                    }
                 }
             }
-            else // Edit
+            catch (Exception)
             {
-                Account account = new Account()
-                {
-                    Id = Convert.ToInt32(txtIdManagement.Text),
-                    UserId =Convert.ToInt32(ddlUser.SelectedValue),
-                    CurrencyId = Convert.ToInt32(ddlCurrency.SelectedValue),
-                    CardId = Convert.ToInt32(ddlCard.SelectedValue),
-                    Description = txtDescription.Text,
-                    IBAN = txtIban.Text,
-                    Balance = Convert.ToInt32(txtBalance.Text),
-                    Status = ddlStatus.SelectedValue,
-                    PhoneNumber = txtPhoneNumber.Text
-                };
-
-                Account accountUpdated = await accountManager.updateAccount(account, Session["Token"].ToString());
-
-                if (!string.IsNullOrEmpty(accountUpdated.Description))
-                {
-                    lblResult.Text = "Account updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
-                    init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
-                }
-                else
-                {
-                    lblResult.Text = "An error ocurred to do this action.";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Red;
-                }
+                ltrModalMsg.Text = "Missing fields, complete them please.";
+                ScriptManager.RegisterStartupScript(this,
+              this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
             }
         }
 
@@ -179,9 +222,8 @@ namespace ADDLBankingApp.Views
                 Account account = await accountManager.deleteAccount(lblIdRemove.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(account.Description))
                 {
-                    ltrModalMsg.Text = "Account deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                  
+                    renderModalMessage("Account deleted");
                     init();
                 }
             }
@@ -248,14 +290,25 @@ namespace ADDLBankingApp.Views
 
                 case "removeAccount":
                     lblIdRemove.Text = row.Cells[0].Text;
+                    lblIdRemove.Visible = false;
                     ltrModalMsg.Text = "Are you sure you want to delete account #" + lblIdRemove.Text + "?";
-
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
                 default:
                     break;
             }
+        }
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }
