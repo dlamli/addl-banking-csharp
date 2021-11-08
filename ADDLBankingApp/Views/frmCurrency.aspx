@@ -128,11 +128,21 @@
                                     ID="ltrDescription"
                                     Text="Description"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtDescription"
                                     runat="server"
                                     CssClass="form-control" />
+
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvDescription" 
+                                    runat="server"
+                                    ErrorMessage="Description is required"
+                                    ControlToValidate="txtDescription"
+                                    ForeColor="Maroon"
+                                    />
+                            </td>
                         </tr>
                         <tr>
                             <td>

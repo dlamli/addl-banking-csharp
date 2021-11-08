@@ -36,7 +36,7 @@ namespace ADDLBankingApp
                         Birthdate = DateTime.ParseExact(txtFechaNacimiento.Text, "dd/MM/yyyy", null),
                         Username = txtUsername.Text,
                         Password = txtPassword.Text,
-                        Status = "A",
+                        Status = Convert.ToString(1),
                         RoleId = 1
                     };
 

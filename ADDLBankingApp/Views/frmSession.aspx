@@ -160,6 +160,14 @@
                                     ID="txtDateStart"
                                     runat="server"
                                     CssClass="form-control" />
+
+                                <asp:RequiredFieldValidator 
+                            ID="rfvDateStart" 
+                            runat="server" 
+                            ForeColor="Maroon"
+                            ErrorMessage="DateStart is required"
+                            ControlToValidate="txtDateStart"
+                            />
                             </td>
                         </tr>
                         <tr>
@@ -173,6 +181,13 @@
                                     ID="txtDateExpiration"
                                     runat="server"
                                     CssClass="form-control" />
+                           <asp:RequiredFieldValidator 
+                            ID="rfvDateExpiration" 
+                            runat="server" 
+                            ForeColor="Maroon"
+                            ErrorMessage="DateExpiration is required"
+                            ControlToValidate="txtDateExpiration"
+                            />
                                 <asp:Label
                                     ID="lblDatemsg"
                                     ForeColor="#FFF7F7"

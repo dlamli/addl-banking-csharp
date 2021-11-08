@@ -132,11 +132,21 @@
                                     ID="ltrType"
                                     Text="Type"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtType"
                                     runat="server"
                                     CssClass="form-control" />
+
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvType" 
+                                    runat="server"
+                                    ErrorMessage="Type is required"
+                                    ControlToValidate="txtType"
+                                    ForeColor="Maroon"
+                                    />
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -144,11 +154,21 @@
                                     ID="ltrAmount"
                                     Text="Amount"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtAmount"
                                     runat="server"
                                     CssClass="form-control" />
+
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvAmount" 
+                                    runat="server"
+                                    ErrorMessage="Amount is required"
+                                    ControlToValidate="txtAmount"
+                                    ForeColor="Maroon"
+                                    />
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -156,12 +176,14 @@
                                     ID="ltrAccountId"
                                     Text="AccountId"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:DropDownList
                                     ID="ddlAccount"
                                     CssClass="form-control"
                                     runat="server">
                                 </asp:DropDownList>
+                            </td>
                         </tr>
                     </table>
                     <asp:Label 

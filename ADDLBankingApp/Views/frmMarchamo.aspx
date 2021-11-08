@@ -138,24 +138,36 @@
                                     ID="ltrAccountId"
                                     Text="AccountId"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:DropDownList
                                     ID="ddlAccount"
                                     CssClass="form-control"
                                     runat="server">
                                 </asp:DropDownList>
+                            </td>
                         </tr>
-                                                <tr>
+                        <tr>
                             <td>
                                 <asp:Literal
                                     ID="ltrName"
                                     Text="Name"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtName"
                                     runat="server"
                                     CssClass="form-control" />
+
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvName" 
+                                    runat="server"
+                                    ErrorMessage="Name is required"
+                                    ControlToValidate="txtName"
+                                    ForeColor="Maroon"
+                                    />
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -163,11 +175,21 @@
                                     ID="ltrAmount"
                                     Text="Amount"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtAmount"
                                     runat="server"
                                     CssClass="form-control" />
+
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvAmount" 
+                                    runat="server"
+                                    ErrorMessage="Amount is required"
+                                    ControlToValidate="txtAmount"
+                                    ForeColor="Maroon"
+                                    />
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -175,11 +197,21 @@
                                     ID="ltrNumberPlate"
                                     Text="Number Plate"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtNumberPlate"
                                     runat="server"
                                     CssClass="form-control" />
+
+                                <asp:RequiredFieldValidator 
+                                    ID="rfvNumberPlate" 
+                                    runat="server"
+                                    ErrorMessage="Plate Number is required"
+                                    ControlToValidate="txtNumberPlate"
+                                    ForeColor="Maroon"
+                                    />
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -187,6 +219,7 @@
                                     ID="ltrVehicleType"
                                     Text="Vehicle Type"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:DropDownList
                                     ID="ddlVehicleType"
@@ -203,6 +236,7 @@
                                     <asp:ListItem Value="C2">C2</asp:ListItem>
                                     <asp:ListItem Value="C3">C3</asp:ListItem>
                                 </asp:DropDownList>
+                            </td>
                         </tr>
                     </table>
                     <asp:Label 

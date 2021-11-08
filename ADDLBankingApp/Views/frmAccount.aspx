@@ -8,12 +8,20 @@
             $('#myModal').modal('show'); //ventana de mensajes
         }
 
+        function openModalMsg() {
+            $('#myModalMsg').modal('show'); //ventana de mensajes
+        }
+
         function openModalManagement() {
             $('#myModalManagement').modal('show'); //ventana de mantenimiento
         }
 
         function CloseModal() {
             $('#myModal').modal('hide');//cierra ventana de mensajes
+        }
+
+        function CloseModalMsg() {
+            $('#myModalMsg').modal('hide');//cierra ventana de mensajes
         }
 
         function CloseManagement() {
@@ -103,7 +111,7 @@
         OnClick="btnNew_Click" />
     <asp:Label
         ID="lblStatus"
-        ForeColor="#FFF7F7"
+        ForeColor="Red"
         runat="server"
         Visible="false" />
 
@@ -190,11 +198,22 @@
                                     ID="ltrDescription"
                                     Text="Description"
                                     runat="server" />
+                                </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtDescription"
                                     runat="server"
                                     CssClass="form-control" />
+                                <asp:RequiredFieldValidator 
+                                    ID="RequiredFieldValidator1" 
+                                    runat="server"
+                                    ForeColor="Red"
+                                    ErrorMessage="Description is required"
+                                    ControlToValidate="txtDescription" 
+                                    EnableClientScript="False"
+                                    ></asp:RequiredFieldValidator>   
+                                </td>
+
                         </tr>
                         <tr>
                             <td>
@@ -202,12 +221,23 @@
                                     ID="ltrIban"
                                     Text="IBAN"
                                     runat="server" />
+                            </td>
                             <td>
+
                                 <asp:TextBox
                                     ID="txtIban"
                                     MaxLength="22"
                                     runat="server"
                                     CssClass="form-control" />
+                                <asp:RequiredFieldValidator 
+                                    ID="RequiredFieldValidator2" 
+                                    runat="server"
+                                    ForeColor="Red"
+                                    ErrorMessage="IBAN is required"
+                                    ControlToValidate="txtIban" 
+                                    EnableClientScript="False"
+                                    ></asp:RequiredFieldValidator>   
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -215,11 +245,20 @@
                                     ID="ltrBalance"
                                     Text="Balance"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtBalance"
                                     runat="server"
                                     CssClass="form-control" />
+                                <asp:RequiredFieldValidator 
+                                    ID="RequiredFieldValidator3" 
+                                    runat="server"
+                                    ForeColor="Red"
+                                    ErrorMessage="Balance is required"
+                                    ControlToValidate="txtBalance" 
+                                    EnableClientScript="False"
+                                    ></asp:RequiredFieldValidator>   
                                 <asp:RegularExpressionValidator
                                     runat="server"
                                     ID="RegularExpressionValidator"
@@ -229,6 +268,7 @@
                                     ErrorMessage="Please enter numbers only"
                                     Display="Dynamic"
                                     SetFocusOnError="True" />
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -236,12 +276,21 @@
                                     ID="ltrPhoneNumber"
                                     Text="Phone Number"
                                     runat="server" />
+                            </td>
                             <td>
                                 <asp:TextBox
                                     ID="txtPhoneNumber"
                                     runat="server"
                                     MaxLength="8"
-                                    CssClass="form-control" />
+                                    CssClass="form-control"/>
+                                <asp:RequiredFieldValidator 
+                                    ID="RequiredFieldValidator4" 
+                                    runat="server"
+                                    ForeColor="Red"
+                                    ErrorMessage="Phone number is required"
+                                    ControlToValidate="txtPhoneNumber" 
+                                    EnableClientScript="False"
+                                    ></asp:RequiredFieldValidator> 
                                 <asp:RegularExpressionValidator
                                     runat="server"
                                     ID="RegularExpressionValidator1"
@@ -251,6 +300,7 @@
                                     ErrorMessage="Please enter numbers only"
                                     Display="Dynamic"
                                     SetFocusOnError="True" />
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -266,7 +316,6 @@
                                     <asp:ListItem Value="1">Active</asp:ListItem>
                                     <asp:ListItem Value="0">Inactive</asp:ListItem>
                                 </asp:DropDownList>
-
                             </td>
                         </tr>
                     </table>
@@ -338,6 +387,49 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+    <%--Modal Message--%>
+    <div id="myModalMsg" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">System Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <asp:Literal
+                            ID="ltrModalMessage"
+                            runat="server" />
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton
+                        type="button"
+                        CssClass="btn btn-success"
+                        ID="btnModalMessage"
+                        OnClick="btnModalMessage_Click"
+                        runat="server"
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Continue" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
 
 
 </asp:Content>

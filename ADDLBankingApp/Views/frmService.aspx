@@ -134,6 +134,14 @@
                                     ID="txtDescription"
                                     runat="server"
                                     CssClass="form-control" />
+
+                                <asp:RequiredFieldValidator 
+                            ID="rfvDescription" 
+                            runat="server" 
+                            ForeColor="Maroon"
+                            ErrorMessage="Description is required"
+                            ControlToValidate="txtDescription"
+                            />
                                 </tr>
                                 <tr>
                             <td>
