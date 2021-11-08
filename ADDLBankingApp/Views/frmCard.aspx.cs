@@ -41,7 +41,6 @@ namespace ADDLBankingApp.Views
             }
         }
 
-
         protected void btnNew_Click(object sender, EventArgs e)
         {
             ltrTitleManagement.Text = "New Card";
