@@ -105,6 +105,24 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.TextBox txtAmount;
 
         /// <summary>
+        /// rfvAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAmount;
+
+        /// <summary>
+        /// revAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revAmount;
+
+        /// <summary>
         /// ltrStartDate control.
         /// </summary>
         /// <remarks>
@@ -121,6 +139,15 @@ namespace ADDLBankingApp.Views
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtStartDate;
+
+        /// <summary>
+        /// rfvStartDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvStartDate;
 
         /// <summary>
         /// ltrEndDate control.
@@ -141,6 +168,15 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.TextBox txtEndDate;
 
         /// <summary>
+        /// rfvEndDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEndDate;
+
+        /// <summary>
         /// ltrPercentage control.
         /// </summary>
         /// <remarks>
@@ -157,6 +193,24 @@ namespace ADDLBankingApp.Views
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPercentage;
+
+        /// <summary>
+        /// rfvPercentage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPercentage;
+
+        /// <summary>
+        /// revPercentage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPercentage;
 
         /// <summary>
         /// lblResult control.
@@ -220,5 +274,23 @@ namespace ADDLBankingApp.Views
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCancelModal;
+
+        /// <summary>
+        /// ltrModalMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrModalMessage;
+
+        /// <summary>
+        /// btnModalMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnModalMessage;
     }
 }

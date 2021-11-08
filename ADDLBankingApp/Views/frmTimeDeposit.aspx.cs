@@ -49,6 +49,14 @@ namespace ADDLBankingApp.Views
             }
         }
 
+        private void clearFields()
+        {
+            txtIdManagement.Text = string.Empty;
+            txtAmount.Text = string.Empty;
+            txtEndDate.Text = string.Empty;
+            txtPercentage.Text = string.Empty;
+        }
+
         public async void init()
         {
             try
@@ -86,7 +94,8 @@ namespace ADDLBankingApp.Views
 
                 case "removeTimeDeposit":
                     lblIdRemove.Text = row.Cells[0].Text.Trim();
-                    ltrModalMsg.Text = "Are you sure want to remove this Time Deposit?";
+                    lblIdRemove.Visible = false;
+                    ltrModalMsg.Text = "Are you sure want to remove Time Deposit#"+ lblIdRemove.Text + " ?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
@@ -99,6 +108,7 @@ namespace ADDLBankingApp.Views
         {
             ltrTitleManagement.Text = "New Time Deposit";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
+            clearFields();
             btnConfirmManagement.Visible = true;
             txtIdManagement.Visible = true;
             txtPercentage.Visible = true;
@@ -110,6 +120,7 @@ namespace ADDLBankingApp.Views
 
         protected async void btnConfirmManagement_Click(object sender, EventArgs e)
         {
+            var dateCompare = DateTime.Compare(Convert.ToDateTime(txtStartDate.Text), Convert.ToDateTime(txtEndDate.Text));
             if (string.IsNullOrEmpty(txtIdManagement.Text)) //Insert
             {
                 TimeDeposit timeDeposit = new TimeDeposit()
@@ -121,22 +132,17 @@ namespace ADDLBankingApp.Views
                     Percentage = Convert.ToDecimal(txtPercentage.Text)
                 };
                 
-                var dateCompare = DateTime.Compare(Convert.ToDateTime(txtStartDate.Text), Convert.ToDateTime(txtEndDate.Text));
-                
-                if (dateCompare > 0) lblResult.Text = "Date start must be earlier than Expiration date";
-                else {
+
+                if (dateCompare > 0) renderModalMessage("Date start must be earlier than Expiration date");
+                else
+                {
 
                     TimeDeposit timeDepositInserted = await timeDepositManager.insertTimeDeposit(timeDeposit, Session["Token"].ToString());
 
                     if (!string.IsNullOrEmpty(timeDepositInserted.AccountId.ToString()))
                     {
-                        lblResult.Text = "Time Deposit created";
-                        lblResult.Visible = true;
-                        lblResult.ForeColor = Color.Green;
-                        btnConfirmManagement.Visible = false;
+                        renderModalMessage("Time Deposit created");
                         init();
-
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                     }
                     else
                     {
@@ -148,34 +154,33 @@ namespace ADDLBankingApp.Views
             }
             else // Edit
             {
-                TimeDeposit timeDeposit = new TimeDeposit()
-                {
-                    Id = Convert.ToInt32(txtIdManagement.Text),
-                    AccountId = Convert.ToInt32(ddlAccount.SelectedValue),
-                    Amount = Convert.ToDecimal(txtAmount.Text),
-                    StartDate = Convert.ToDateTime(txtStartDate.Text),
-                    EndDate = Convert.ToDateTime(txtEndDate.Text),
-                    Percentage = Convert.ToDecimal(txtPercentage.Text)
-                };
-
-                TimeDeposit timeDepositUpdate = await timeDepositManager.updateTimeDeposit(timeDeposit, Session["Token"].ToString());
-
-                if (!string.IsNullOrEmpty(timeDepositUpdate.AccountId.ToString()))
-                {
-                    lblResult.Text = "Time Deposit updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
-                    init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
-                }
+                if (dateCompare > 0) renderModalMessage("Date start must be earlier than Expiration date");
                 else
                 {
-                    lblResult.Text = "An error ocurred to do this action.";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Red;
-                }
+                    TimeDeposit timeDeposit = new TimeDeposit()
+                    {
+                        Id = Convert.ToInt32(txtIdManagement.Text),
+                        AccountId = Convert.ToInt32(ddlAccount.SelectedValue),
+                        Amount = Convert.ToDecimal(txtAmount.Text),
+                        StartDate = Convert.ToDateTime(txtStartDate.Text),
+                        EndDate = Convert.ToDateTime(txtEndDate.Text),
+                        Percentage = Convert.ToDecimal(txtPercentage.Text)
+                    };
+
+                    TimeDeposit timeDepositUpdate = await timeDepositManager.updateTimeDeposit(timeDeposit, Session["Token"].ToString());
+
+                    if (!string.IsNullOrEmpty(timeDepositUpdate.AccountId.ToString()))
+                    {
+                        renderModalMessage("Time Deposit updated");
+                        init();
+                    }
+                    else
+                    {
+                        lblResult.Text = "An error ocurred to do this action.";
+                        lblResult.Visible = true;
+                        lblResult.ForeColor = Color.Red;
+                    }
+                }           
             }
         }
 
@@ -191,9 +196,7 @@ namespace ADDLBankingApp.Views
                 TimeDeposit timeDeposit = await timeDepositManager.deleteTimeDeposit(lblIdRemove.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(timeDeposit.AccountId.ToString()))
                 {
-                    ltrModalMsg.Text = "Time Deposit deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Time deposit deleted");
                     init();
                 }
             }
@@ -217,6 +220,17 @@ namespace ADDLBankingApp.Views
         protected void btnCancelModal_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModal(); });", true);
+        }
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }
