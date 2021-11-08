@@ -19,7 +19,7 @@ namespace ADDLBankingApp.Views
         IEnumerable<Account> accounts = new ObservableCollection<Account>();
         AccountManager accountManager = new AccountManager();
         string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
-        //List<Account> accountList = new List<Account>();
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,8 +29,6 @@ namespace ADDLBankingApp.Views
                 else
                 {
                     init();
-                   
-
                     using (SqlConnection conn = new SqlConnection(connString))
                     {
                         conn.Open();
@@ -75,12 +73,20 @@ namespace ADDLBankingApp.Views
                             ddlCard.DataBind();
                         }
                     }
-                    
+
                 }
 
             }
         }
 
+
+        private void clearFields()
+        {
+            txtIdManagement.Text = string.Empty;
+            txtDescription.Text = string.Empty;
+            txtBalance.Text = string.Empty;
+            txtPhoneNumber.Text = string.Empty;
+        }
         public async void init()
         {
             try
@@ -91,7 +97,7 @@ namespace ADDLBankingApp.Views
             }
             catch (Exception ex)
             {
-                
+
                 lblStatus.Text = "An error ocurred  to load account list.";
                 lblStatus.Visible = true;
                 ErrorLogManager errorManager = new ErrorLogManager();
@@ -114,7 +120,7 @@ namespace ADDLBankingApp.Views
             bool accountExist = false;
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                using(SqlCommand cmd = new SqlCommand("CheckAccountCreation", conn))
+                using (SqlCommand cmd = new SqlCommand("CheckAccountCreation", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IBAN", IBAN.Trim());
@@ -143,7 +149,7 @@ namespace ADDLBankingApp.Views
                             CardId = Convert.ToInt32(ddlCard.SelectedValue),
                             Description = txtDescription.Text,
                             IBAN = txtIban.Text,
-                            Balance = Convert.ToInt32(txtBalance.Text),
+                            Balance = Convert.ToDecimal(txtBalance.Text),
                             Status = ddlStatus.SelectedValue,
                             PhoneNumber = txtPhoneNumber.Text
                         };
@@ -178,7 +184,7 @@ namespace ADDLBankingApp.Views
                         CardId = Convert.ToInt32(ddlCard.SelectedValue),
                         Description = txtDescription.Text,
                         IBAN = txtIban.Text,
-                        Balance = Convert.ToInt32(txtBalance.Text),
+                        Balance = Convert.ToDecimal(txtBalance.Text),
                         Status = ddlStatus.SelectedValue,
                         PhoneNumber = txtPhoneNumber.Text
                     };
@@ -187,7 +193,7 @@ namespace ADDLBankingApp.Views
 
                     if (!string.IsNullOrEmpty(accountUpdated.Description))
                     {
-                       
+
                         renderModalMessage("Account Updated");
                         init();
 
@@ -202,9 +208,7 @@ namespace ADDLBankingApp.Views
             }
             catch (Exception)
             {
-                ltrModalMsg.Text = "Missing fields, complete them please.";
-                ScriptManager.RegisterStartupScript(this,
-              this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
+                renderModalMessage("Missing fields. Compelte them please");
             }
         }
 
@@ -220,7 +224,7 @@ namespace ADDLBankingApp.Views
                 Account account = await accountManager.deleteAccount(lblIdRemove.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(account.Description))
                 {
-                  
+
                     renderModalMessage("Account deleted");
                     init();
                 }
@@ -249,6 +253,7 @@ namespace ADDLBankingApp.Views
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
+            clearFields();
             ltrTitleManagement.Text = "New Account";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
             btnConfirmManagement.Visible = true;
@@ -261,8 +266,8 @@ namespace ADDLBankingApp.Views
             txtDescription.Visible = true;
             ddlStatus.Enabled = true;
             ddlCurrency.Enabled = true;
-            txtIdManagement.Text = string.Empty;
-            txtDescription.Text = string.Empty;
+            txtIban.Text = generateIBAN();
+            txtIban.Enabled = false;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
         }
 
@@ -282,6 +287,11 @@ namespace ADDLBankingApp.Views
                     txtBalance.Text = row.Cells[6].Text.Trim();
                     txtPhoneNumber.Text = row.Cells[7].Text.Trim();
                     btnConfirmManagement.Visible = true;
+                    txtIban.Enabled = false;
+                    ddlCard.SelectedValue = row.Cells[3].Text.Trim();
+                    ddlUser.SelectedValue = row.Cells[1].Text.Trim();
+                    ddlCurrency.SelectedValue = row.Cells[2].Text.Trim();
+                    ddlCard.Enabled = false;
                     ScriptManager.RegisterStartupScript(this,
                 this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                     break;
@@ -302,11 +312,25 @@ namespace ADDLBankingApp.Views
         {
             ltrModalMessage.Text = text;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+            clearFields();
         }
 
         protected void btnModalMessage_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
+        }
+
+        private string generateIBAN()
+        {
+            string IBAN = "";
+            Random rnd = new Random();
+
+            for (int i = 0; i < 22; i++)
+            {
+                IBAN += rnd.Next(0, 9);
+            }
+
+            return IBAN;
         }
     }
 }

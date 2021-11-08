@@ -29,6 +29,7 @@ namespace ADDLBankingApp.Views
             }
         }
 
+
         public async void init()
         {
             try
@@ -57,10 +58,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(roleInserted.Name))
                 {
-                    lblResult.Text = "Role created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Role created");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -84,10 +82,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(roleUpdated.Name))
                 {
-                    lblResult.Text = "Role updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Role Updated");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -113,9 +108,7 @@ namespace ADDLBankingApp.Views
                 Role role = await roleManager.deleteRole(_id, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(role.Name))
                 {
-                    ltrModalMsg.Text = "Role deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Role deleted");
                     init();
                 }
             }
@@ -181,6 +174,17 @@ namespace ADDLBankingApp.Views
                 default:
                     break;
             }
+        }
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }

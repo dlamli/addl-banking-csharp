@@ -20,6 +20,7 @@
             $('#myModal').modal('hide');//cierra ventana de mensajes
         }
 
+
         function CloseModalMsg() {
             $('#myModalMsg').modal('hide');//cierra ventana de mensajes
         }
@@ -108,7 +109,8 @@
         CssClass="btn btn-success"
         runat="server"
         Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
-        OnClick="btnNew_Click" />
+        OnClick="btnNew_Click" 
+        CausesValidation="false"/>
     <asp:Label
         ID="lblStatus"
         ForeColor="Red"
@@ -199,18 +201,21 @@
                                     Text="Description"
                                     runat="server" />
                                 </td>
+
                             <td>
                                 <asp:TextBox
                                     ID="txtDescription"
                                     runat="server"
                                     CssClass="form-control" />
                                 <asp:RequiredFieldValidator 
-                                    ID="RequiredFieldValidator1" 
+                                    ID="rfvDescription" 
                                     runat="server"
                                     ForeColor="Red"
-                                    ErrorMessage="Description is required"
                                     ControlToValidate="txtDescription" 
-                                    EnableClientScript="False"
+                                    EnableClientScript="true"
+                                    ErrorMessage="Description is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
                                     ></asp:RequiredFieldValidator>   
                                 </td>
 
@@ -224,19 +229,12 @@
                             </td>
                             <td>
 
+
                                 <asp:TextBox
                                     ID="txtIban"
                                     MaxLength="22"
                                     runat="server"
                                     CssClass="form-control" />
-                                <asp:RequiredFieldValidator 
-                                    ID="RequiredFieldValidator2" 
-                                    runat="server"
-                                    ForeColor="Red"
-                                    ErrorMessage="IBAN is required"
-                                    ControlToValidate="txtIban" 
-                                    EnableClientScript="False"
-                                    ></asp:RequiredFieldValidator>   
                             </td>
                         </tr>
                         <tr>
@@ -255,17 +253,20 @@
                                     ID="RequiredFieldValidator3" 
                                     runat="server"
                                     ForeColor="Red"
-                                    ErrorMessage="Balance is required"
                                     ControlToValidate="txtBalance" 
-                                    EnableClientScript="False"
+                                    EnableClientScript="true"
+                                    ErrorMessage="Balance is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
                                     ></asp:RequiredFieldValidator>   
                                 <asp:RegularExpressionValidator
-                                    runat="server"
                                     ID="RegularExpressionValidator"
+                                    runat="server"
+                                    ForeColor="Red"
                                     ControlToValidate="txtBalance"
-                                    ValidationExpression="^\d+$"
+                                    ValidationExpression="^\d+[\.\,]\d+$"
                                     EnableClientScript="true"
-                                    ErrorMessage="Please enter numbers only"
+                                    ErrorMessage="Please enter number with decimals only"
                                     Display="Dynamic"
                                     SetFocusOnError="True" />
                             </td>
@@ -284,13 +285,15 @@
                                     MaxLength="8"
                                     CssClass="form-control"/>
                                 <asp:RequiredFieldValidator 
-                                    ID="RequiredFieldValidator4" 
+                                    ID="rfvPhoneNumber" 
                                     runat="server"
                                     ForeColor="Red"
-                                    ErrorMessage="Phone number is required"
                                     ControlToValidate="txtPhoneNumber" 
-                                    EnableClientScript="False"
-                                    ></asp:RequiredFieldValidator> 
+                                    EnableClientScript="true"
+                                    ErrorMessage="Phone Number is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>   
                                 <asp:RegularExpressionValidator
                                     runat="server"
                                     ID="RegularExpressionValidator1"
@@ -374,6 +377,7 @@
                         CssClass="btn btn-success"
                         ID="btnConfirmModal"
                         OnClick="btnConfirmModal_Click"
+                        CausesValidation="false"
                         runat="server"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm" />
                     <asp:LinkButton
@@ -381,12 +385,14 @@
                         CssClass="btn btn-danger"
                         ID="btnCancelModal"
                         OnClick="btnCancelModal_Click"
+                        CausesValidation="false"
                         runat="server"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel" />
                 </div>
             </div>
         </div>
     </div>
+
 
 
 
@@ -418,12 +424,12 @@
                         ID="btnModalMessage"
                         OnClick="btnModalMessage_Click"
                         runat="server"
+                        CausesValidation="false"
                         Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Continue" />
                 </div>
             </div>
         </div>
     </div>
-
 
 
 
