@@ -50,17 +50,13 @@ namespace ADDLBankingApp.Views
                 {
                     Description = txtDescription.Text,
                     Status = ddlStatus.SelectedValue
-
                 };
 
                 Service serviceInserted = await serviceManager.insertService(service, Session["Token"].ToString());
 
                 if (!string.IsNullOrEmpty(serviceInserted.Description))
                 {
-                    lblResult.Text = "Service created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Service created");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -85,10 +81,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(serviceUpdated.Description))
                 {
-                    lblResult.Text = "Service updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Service updated");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -114,9 +107,7 @@ namespace ADDLBankingApp.Views
                 Service service = await serviceManager.deleteService(_id, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(service.Description))
                 {
-                    ltrModalMsg.Text = "Service deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Service deleted");
                     init();
                 }
             }
@@ -175,13 +166,25 @@ namespace ADDLBankingApp.Views
 
                 case "removeService":
                     _id = row.Cells[0].Text.Trim();
-                    ltrModalMsg.Text = "Are you sure want to remove this Service?";
+                    ltrModalMsg.Text = "Are you sure want to remove service #" +_id+" ?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
                 default:
                     break;
             }
+        }
+
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }
