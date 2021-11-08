@@ -28,6 +28,7 @@
             $('#myModalMsg').modal('hide');//cierra ventana de mensajes
         }
 
+
         $(document).ready(function () { //filtrar el datagridview
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
@@ -229,7 +230,6 @@
             </div>
         </div>
     </div>
-
     <%--Modal Message--%>
     <div id="myModalMsg" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">

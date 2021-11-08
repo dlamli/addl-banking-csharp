@@ -29,6 +29,7 @@ namespace ADDLBankingApp.Views
                 else
                 {
                     init();
+
                     using (SqlConnection conn = new SqlConnection(connString))
                     {
                         conn.Open();
@@ -87,6 +88,7 @@ namespace ADDLBankingApp.Views
             txtBalance.Text = string.Empty;
             txtPhoneNumber.Text = string.Empty;
         }
+
         public async void init()
         {
             try
@@ -121,6 +123,7 @@ namespace ADDLBankingApp.Views
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 using (SqlCommand cmd = new SqlCommand("CheckAccountCreation", conn))
+
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IBAN", IBAN.Trim());
@@ -331,6 +334,7 @@ namespace ADDLBankingApp.Views
             }
 
             return IBAN;
+
         }
     }
 }

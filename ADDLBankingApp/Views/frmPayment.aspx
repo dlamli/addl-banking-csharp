@@ -171,7 +171,6 @@
                                     ID="txtDate"
                                     runat="server"
                                     CssClass="form-control" />
-
                             </td>
                         </tr>
                         <tr>
@@ -186,7 +185,6 @@
                                     ID="txtAmount"
                                     runat="server"
                                     CssClass="form-control" />
-
                                 <asp:RequiredFieldValidator 
                                     ID="rfvAmount" 
                                     runat="server"

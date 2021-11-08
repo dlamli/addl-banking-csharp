@@ -41,7 +41,6 @@ namespace ADDLBankingApp.Views
             }
         }
 
-
         protected void btnNew_Click(object sender, EventArgs e)
         {
             ltrTitleManagement.Text = "New Card";
@@ -152,6 +151,7 @@ namespace ADDLBankingApp.Views
                 ErrorLog errorIngresado = await errorManager.insertErrorLog(error);
             }
         }
+
 
         protected void btnCancelModal_Click(object sender, EventArgs e)
         {
