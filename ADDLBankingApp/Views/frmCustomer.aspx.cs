@@ -68,10 +68,24 @@ namespace ADDLBankingApp.Views
 
         }
 
+        private void clearFields()
+        {
+            txtIdManagement.Text = string.Empty;
+            txtIdentification.Text = string.Empty;
+            txtUsername.Text = string.Empty;
+            txtName.Text = string.Empty;
+            txtMiddleName.Text = string.Empty;
+            txtLastName.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            txtBirthDate.Text = string.Empty;
+        }
+
         protected void btnNew_Click(object sender, EventArgs e)
         {
             ltrTitleManagement.Text = "New Customer";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
+            clearFields();
             btnConfirmManagement.Visible = true;
             ltrIdManagement.Visible = true;
             txtIdManagement.Visible = true;
@@ -116,10 +130,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(customerInserted.Name))
                 {
-                    lblResult.Text = "Customer created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Customer created");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -152,10 +163,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(customerUpdated.Name))
                 {
-                    lblResult.Text = "Customer updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Customer updated");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -181,9 +189,7 @@ namespace ADDLBankingApp.Views
                 Customer customerDeleted = await customerManager.deleteCustomer(lblIdRemove.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(customerDeleted.Name))
                 {
-                    ltrModalMsg.Text = "Customer deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Customer deleted");
                     init();
                 }
             }
@@ -235,6 +241,7 @@ namespace ADDLBankingApp.Views
 
                 case "removeCustomer":
                     lblIdRemove.Text = row.Cells[0].Text;
+                    lblIdRemove.Visible = false;
                     ltrModalMsg.Text = "Are you sure you want to delete customer #" + lblIdRemove.Text + "?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
@@ -242,6 +249,18 @@ namespace ADDLBankingApp.Views
                 default:
                     break;
             }
+        }
+
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }

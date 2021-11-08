@@ -28,7 +28,6 @@
             $('#myModalMsg').modal('hide');//cierra ventana de mensajes
         }
 
-
         $(document).ready(function () { //filtrar el datagridview
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();

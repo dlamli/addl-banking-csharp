@@ -28,7 +28,6 @@ namespace ADDLBankingApp.Views
                 else init();
             }
         }
-
         public async void init()
         {
             try
