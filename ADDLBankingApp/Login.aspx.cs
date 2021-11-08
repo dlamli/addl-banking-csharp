@@ -39,6 +39,16 @@ namespace ADDLBankingApp
                         Session["Token"] = customer.Token;
 
                         FormsAuthentication.RedirectFromLoginPage(customer.Username, false);
+                        SessionManager sessionManager = new SessionManager();
+                        Session session = new Session()
+                        {
+                            UserId = Convert.ToInt32(Session["Id"].ToString()),
+                            DateStart = DateTime.Now,
+                            DateExpiration = DateTime.Now,
+                            Status = Convert.ToString(1)
+                        };
+
+                        await sessionManager.insertSession(session, Session["Token"].ToString());
                     }
                     else
                     {
