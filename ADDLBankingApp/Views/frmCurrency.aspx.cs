@@ -45,6 +45,8 @@ namespace ADDLBankingApp.Views
         {
             ltrTitleManagement.Text = "New Currency";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
+            txtIdManagement.Text = string.Empty;
+            txtDescription.Text = string.Empty;
             btnConfirmManagement.Visible = true;
             txtDescription.Visible = true;
             ltrDescription.Visible = true;
@@ -73,13 +75,9 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(currencyInserted.Description))
                 {
-                    lblResult.Text = "Currency created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Currency Created");
                     init();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -101,13 +99,9 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(currencyUpdated.Description))
                 {
-                    lblResult.Text = "Currency updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Currency Updated");
                     init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
+                   
                 }
                 else
                 {
@@ -124,10 +118,7 @@ namespace ADDLBankingApp.Views
                 Currency currency = await currencyManager.deleteCurrency(lblRemoveCode.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(currency.Description))
                 {
-                    lblRemoveCode.Text = string.Empty;
-                    ltrModalMessage.Text = "Servicio eliminado";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Currency Deleted");
                     init();
                 }
             }
@@ -137,9 +128,9 @@ namespace ADDLBankingApp.Views
                 ErrorLog error = new ErrorLog()
                 {
                     UserId =
-                        Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                        Convert.ToInt32(Session["Id"].ToString()),
                     Date = DateTime.Now,
-                    Page = "frmServicio.aspx",
+                    Page = "frmCurrency.aspx",
                     Action = "btnConfirmModal_Click",
                     Source = ex.Source,
                     Number = ex.HResult,
@@ -162,7 +153,7 @@ namespace ADDLBankingApp.Views
             switch (e.CommandName)
             {
                 case "editCurrency":
-                    ltrIdManagement.Text = "Modificar servicio";
+                    ltrIdManagement.Text = "Edit Currency";
                     btnConfirmManagement.ControlStyle.CssClass = "btn btn-primary";
                     txtIdManagement.Text = row.Cells[0].Text.Trim();
                     txtDescription.Text = row.Cells[1].Text.Trim();
@@ -171,6 +162,7 @@ namespace ADDLBankingApp.Views
                     break;
                 case "removeCurrency":
                     lblRemoveCode.Text = row.Cells[0].Text;
+                    lblRemoveCode.Visible = false;
                     ltrModalMessage.Text = "Are you sure you want to delete currency #" + lblRemoveCode.Text + "?";
                     ScriptManager.RegisterStartupScript(this,
                         this.GetType(), "LaunchServerSide", "$(function() { openModal(); } );", true);
@@ -178,6 +170,17 @@ namespace ADDLBankingApp.Views
                 default:
                     break;
             }
+        }
+
+        public void renderModalMessage(string text)
+        {
+            ltrCurrencyMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }

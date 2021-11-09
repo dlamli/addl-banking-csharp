@@ -489,6 +489,7 @@
             </div>
         </div>
     </div>
+
      <%--Modal Message--%>
     <div id="myModalMsg" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">

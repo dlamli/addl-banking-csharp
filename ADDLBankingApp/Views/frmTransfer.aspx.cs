@@ -18,7 +18,6 @@ namespace ADDLBankingApp.Views
     {
         IEnumerable<Transfer> transfers = new ObservableCollection<Transfer>();
         TransferManager transferManager = new TransferManager();
-        static string _id = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -82,13 +81,8 @@ namespace ADDLBankingApp.Views
                 if(!string.IsNullOrEmpty(transferInserted.Description) && !transferInserted.Amount.Equals(0) &&
                     !transferInserted.AccountDestiny.Equals(0))
                 {
-                    lblResult.Text = "Transfer created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Transfer created");
                     init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -117,13 +111,8 @@ namespace ADDLBankingApp.Views
                     && !transferUpdated.Amount.Equals(0) 
                     && !transferUpdated.AccountDestiny.Equals(0))
                 {
-                    lblResult.Text = "Transfer updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Transfer updated");
                     init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -143,17 +132,16 @@ namespace ADDLBankingApp.Views
         {
             try
             {
-                Transfer transfer = await transferManager.deleteTransfer(_id, Session["Token"].ToString());
+                Transfer transfer = await transferManager.deleteTransfer(lblIdRemove.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(transfer.Id.ToString()))
                 {
-                    ltrModalMsg.Text = "Transfer deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Transfer deleted");
                     init();
                 }
             }
             catch (Exception ex)
             {
+                renderModalMessage("No se puede eliminar la cuenta, porque su información está activa");
                 ErrorLogManager errorManager = new ErrorLogManager();
                 ErrorLog error = new ErrorLog()
                 {
@@ -214,14 +202,26 @@ namespace ADDLBankingApp.Views
                     break;
 
                 case "removeTransfers":
-                    _id = row.Cells[0].Text.Trim();
-                    ltrModalMsg.Text = "Are you sure want to remove this transfer?";
+                    lblIdRemove.Text = row.Cells[0].Text.Trim();
+                    lblIdRemove.Visible = false;
+                    ltrModalMsg.Text = "Are you sure want to remove this transfer#"+lblIdRemove.Text+" ?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
                 default:
                     break;
             }
+        }
+
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }

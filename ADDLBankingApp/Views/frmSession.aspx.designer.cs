@@ -24,15 +24,6 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.GridView gvSession;
 
         /// <summary>
-        /// btnNew control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnNew;
-
-        /// <summary>
         /// lblStatus control.
         /// </summary>
         /// <remarks>
@@ -105,6 +96,15 @@ namespace ADDLBankingApp.Views
         protected global::System.Web.UI.WebControls.TextBox txtDateStart;
 
         /// <summary>
+        /// rfvDateStart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDateStart;
+
+        /// <summary>
         /// ltrDateExpiration control.
         /// </summary>
         /// <remarks>
@@ -121,6 +121,15 @@ namespace ADDLBankingApp.Views
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDateExpiration;
+
+        /// <summary>
+        /// rfvDateExpiration control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDateExpiration;
 
         /// <summary>
         /// lblDatemsg control.
@@ -157,23 +166,5 @@ namespace ADDLBankingApp.Views
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblResult;
-
-        /// <summary>
-        /// btnConfirmManagement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnConfirmManagement;
-
-        /// <summary>
-        /// btnCancelManagement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnCancelManagement;
     }
 }

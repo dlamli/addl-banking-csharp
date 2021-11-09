@@ -89,6 +89,9 @@ namespace ADDLBankingApp.Views
         {
             ltrTitleManagement.Text = "New Payment";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
+            txtIdManagement.Text = string.Empty;
+            txtDate.Text = string.Empty;
+            txtAmount.Text = string.Empty;           
             btnConfirmManagement.Visible = true;
             ltrIdManagement.Visible = true;
             txtIdManagement.Visible = true;
@@ -121,13 +124,10 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(paymentInserted.Id.ToString()))
                 {
-                    lblResult.Text = "Payment created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Payment Created");
                     init();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
+                    
                 }
                 else
                 {
@@ -151,13 +151,10 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(paymentUpdated.Id.ToString()))
                 {
-                    lblResult.Text = "Currency updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Payment Updated");
                     init();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
+                    
                 }
                 else
                 {
@@ -180,10 +177,7 @@ namespace ADDLBankingApp.Views
                 Payment payment = await paymentManager.deletePayment(lblRemoveCode.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(payment.Id.ToString()))
                 {
-                    lblRemoveCode.Text = string.Empty;
-                    ltrModalMessage.Text = "Payment deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Payment Deleted");
                     init();
                 }
             }
@@ -228,13 +222,26 @@ namespace ADDLBankingApp.Views
                     break;
                 case "removePayment":
                     lblRemoveCode.Text = row.Cells[0].Text;
-                    ltrModalMessage.Text = "Are you sure you want to delete currency #" + lblRemoveCode.Text + "?";
+                    lblRemoveCode.Visible = false;
+                    ltrModalMessage.Text = "Are you sure you want to delete payment #" + lblRemoveCode.Text + "?";
                     ScriptManager.RegisterStartupScript(this,
                         this.GetType(), "LaunchServerSide", "$(function() { openModal(); } );", true);
                     break;
                 default:
                     break;
             }
+        }
+
+        public void renderModalMessage(string text)
+        {
+            ltrPaymentMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }

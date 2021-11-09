@@ -79,13 +79,8 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(utilityInserted.AccountId.ToString()))
                 {
-                    lblResult.Text = "Utility created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Utility created");
                     init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -107,13 +102,8 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(utilityUpdated.AccountId.ToString()))
                 {
-                    lblResult.Text = "Role updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Utility updated");
                     init();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -136,9 +126,7 @@ namespace ADDLBankingApp.Views
                 Utility utility = await utilityManager.deleteUtility(_id, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(utility.AccountId.ToString()))
                 {
-                    ltrModalMsg.Text = "Role deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Utility deleted");
                     init();
                 }
             }
@@ -197,13 +185,25 @@ namespace ADDLBankingApp.Views
 
                 case "removeUtility":
                     _id = row.Cells[0].Text.Trim();
-                    ltrModalMsg.Text = "Are you sure want to remove this utility?";
+                    lblIdRemove.Visible = false;
+                    ltrModalMsg.Text = "Are you sure want to remove this utility#"+ _id+"?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
                 default:
                     break;
             }
+        }
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }
