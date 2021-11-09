@@ -219,7 +219,7 @@ namespace ADDLBankingApp.Views
 
         public void renderModalMessage(string text)
         {
-            ltrModalMessage.Text = text;
+            ltrMarchamoMessage.Text = text;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
         }
 

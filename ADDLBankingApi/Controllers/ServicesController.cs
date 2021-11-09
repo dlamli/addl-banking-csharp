@@ -6,6 +6,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ADDLBankingApi.Models;
@@ -86,16 +88,25 @@ namespace ADDLBankingApi.Controllers
         [ResponseType(typeof(Service))]
         public IHttpActionResult DeleteService(int id)
         {
-            Service service = db.Service.Find(id);
-            if (service == null)
+            try
             {
-                return NotFound();
+                Service service = db.Service.Find(id);
+                if (service == null)
+                {
+                    return NotFound();
+                }
+
+                db.Service.Remove(service);
+                db.SaveChanges();
+
+                return Ok(service);
+
+
             }
-
-            db.Service.Remove(service);
-            db.SaveChanges();
-
-            return Ok(service);
+            catch (Exception)
+            {
+                return Content(HttpStatusCode.NotAcceptable, "Database Service table relationship error.");
+            }
         }
 
         protected override void Dispose(bool disposing)

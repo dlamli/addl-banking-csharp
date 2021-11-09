@@ -20,6 +20,8 @@
         HeaderStyle-BackColor="#204969"
         HeaderStyle-ForeColor="#FFF7F7"
         AlternatingRowStyle-BackColor="#DADADA"
+        OnPageIndexChanging="gvErrorlog_PageIndexChanging"
+        AllowPaging ="true"
         >
 
         <Columns>

@@ -174,18 +174,19 @@ namespace ADDLBankingApp.Views
                     init();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                renderModalMessage("CardRequest table error with foreign key.");
                 ErrorLogManager errorManager = new ErrorLogManager();
                 ErrorLog error = new ErrorLog()
                 {
                     UserId = Convert.ToInt32(Session["Id"].ToString()),
                     Date = DateTime.Now,
                     Page = "frmCardRequest.aspx",
-                    Action = "btnAceptarModal_Click",
-                    Source = ex.Source,
-                    Number = ex.HResult,
-                    Description = ex.Message
+                    Action = "btnConfirmModal_Click",
+                    Source = "CardRequest",
+                    Number = 547,
+                    Description = "CardRequest table error with foreign key."
                 };
                 await errorManager.insertErrorLog(error);
             }

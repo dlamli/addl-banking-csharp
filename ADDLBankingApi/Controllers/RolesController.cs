@@ -86,6 +86,8 @@ namespace ADDLBankingApi.Controllers
         [ResponseType(typeof(Role))]
         public IHttpActionResult DeleteRole(int id)
         {
+            try
+            {
             Role role = db.Role.Find(id);
             if (role == null)
             {
@@ -96,6 +98,10 @@ namespace ADDLBankingApi.Controllers
             db.SaveChanges();
 
             return Ok(role);
+            } catch (Exception)
+            {
+                return Content(HttpStatusCode.NotAcceptable, "Database Role table relationship error.");
+            }
         }
 
         protected override void Dispose(bool disposing)

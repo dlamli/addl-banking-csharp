@@ -86,16 +86,22 @@ namespace ADDLBankingApi.Controllers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
         {
-            Customer customer = db.Customer.Find(id);
-            if (customer == null)
+            try
             {
-                return NotFound();
+                Customer customer = db.Customer.Find(id);
+                if (customer == null)
+                {
+                    return NotFound();
+                }
+
+                db.Customer.Remove(customer);
+                db.SaveChanges();
+
+                return Ok(customer);
+            }catch (Exception)
+            {
+                return Content(HttpStatusCode.NotAcceptable, "Database Customer table relationship error.");
             }
-
-            db.Customer.Remove(customer);
-            db.SaveChanges();
-
-            return Ok(customer);
         }
 
         protected override void Dispose(bool disposing)
