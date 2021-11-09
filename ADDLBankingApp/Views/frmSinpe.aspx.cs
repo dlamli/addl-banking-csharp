@@ -78,13 +78,10 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(sinpeInserted.AccountTarget) && !sinpeInserted.Amount.Equals(0))
                 {
-                    lblResult.Text = "Sinpe created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
+                    renderModalMessage("Sinpe created");
                     btnConfirmManagement.Visible = false;
                     init();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -108,13 +105,10 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(sinpeUpdated.AccountTarget) && !sinpeUpdated.Amount.Equals(0))
                 {
-                    lblResult.Text = "Sinpe updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
+                    renderModalMessage("Sinpe Updated");
                     btnConfirmManagement.Visible = false;
                     init();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
                 }
                 else
                 {
@@ -134,12 +128,10 @@ namespace ADDLBankingApp.Views
         {
             try
             {
-                SinpeM sinpe = await sinpeManager.deleteSinpeM(_id, Session["Token"].ToString());
+                SinpeM sinpe = await sinpeManager.deleteSinpeM(lblIdRemove.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(sinpe.AccountTarget))
                 {
-                    ltrModalMsg.Text = "Sinpe deleted";
-                    btnConfirmModal.Visible = false;
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    renderModalMessage("Sinpe deleted");
                     init();
                 }
             }
@@ -181,6 +173,8 @@ namespace ADDLBankingApp.Views
             ltrTransactionDate.Visible = false;
             txtIdManagement.Text = string.Empty;
             txtAmount.Text = string.Empty;
+            txtAccountTarget.Text = string.Empty;
+            txtTransactionDate.Text = string.Empty;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
         }
 
@@ -204,14 +198,28 @@ namespace ADDLBankingApp.Views
                     break;
 
                 case "removeSinpe":
-                    _id = row.Cells[0].Text.Trim();
-                    ltrModalMsg.Text = "Are you sure want to remove this sinpe?";
+                    lblIdRemove.Text = row.Cells[0].Text.Trim();
+                    lblIdRemove.Visible = false;
+                    ltrModalMsg.Text = "Are you sure want to remove this sinpe# " + lblIdRemove.Text + "?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
                 default:
                     break;
             }
+        }
+
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }

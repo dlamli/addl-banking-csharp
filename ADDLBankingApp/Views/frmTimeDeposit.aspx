@@ -276,6 +276,7 @@
                                 <asp:TextBox
                                     ID="txtPercentage"
                                     runat="server"
+                                    MaxLength="2"
                                     CssClass="form-control" />
                                 <asp:RequiredFieldValidator 
                                     ID="rfvPercentage" 

@@ -186,7 +186,7 @@ namespace ADDLBankingApp.Views
                 case "removeUtility":
                     _id = row.Cells[0].Text.Trim();
                     lblIdRemove.Visible = false;
-                    ltrModalMsg.Text = "Are you sure want to remove this utility#"+lblIdRemove.Text+"?";
+                    ltrModalMsg.Text = "Are you sure want to remove this utility#"+ _id+"?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
