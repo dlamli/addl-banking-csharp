@@ -86,16 +86,23 @@ namespace ADDLBankingApi.Controllers
         [ResponseType(typeof(CardRequest))]
         public IHttpActionResult DeleteCardRequest(int id)
         {
-            CardRequest cardRequest = db.CardRequest.Find(id);
-            if (cardRequest == null)
+            try
             {
-                return NotFound();
+                CardRequest cardRequest = db.CardRequest.Find(id);
+                if (cardRequest == null)
+                {
+                    return NotFound();
+                }
+
+                db.CardRequest.Remove(cardRequest);
+                db.SaveChanges();
+
+                return Ok(cardRequest);
             }
-
-            db.CardRequest.Remove(cardRequest);
-            db.SaveChanges();
-
-            return Ok(cardRequest);
+            catch (Exception)
+            {
+                return Content(HttpStatusCode.NotAcceptable, "Database CardRequest table relationship error.");
+            }
         }
 
         protected override void Dispose(bool disposing)

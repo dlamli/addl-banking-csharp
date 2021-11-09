@@ -85,16 +85,22 @@ namespace ADDLBankingApi.Controllers
         [ResponseType(typeof(Currency))]
         public IHttpActionResult DeleteCurrency(int id)
         {
-            Currency currency = db.Currency.Find(id);
-            if (currency == null)
+            try
             {
-                return NotFound();
+                Currency currency = db.Currency.Find(id);
+                if (currency == null)
+                {
+                    return NotFound();
+                }
+
+                db.Currency.Remove(currency);
+                db.SaveChanges();
+
+                return Ok(currency);
+            }catch (Exception)
+            {
+                return Content(HttpStatusCode.NotAcceptable, "Database Currency table relationship error.");
             }
-
-            db.Currency.Remove(currency);
-            db.SaveChanges();
-
-            return Ok(currency);
         }
 
         protected override void Dispose(bool disposing)

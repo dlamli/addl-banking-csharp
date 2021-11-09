@@ -65,7 +65,10 @@
         HeaderStyle-CssClass="thead-dark"
         HeaderStyle-BackColor="#204969"
         HeaderStyle-ForeColor="#FFF7F7"
-        AlternatingRowStyle-BackColor="#DADADA">
+        AlternatingRowStyle-BackColor="#DADADA"
+        OnPageIndexChanging="gvSession_PageIndexChanging"
+        AllowPaging ="true"
+        >
 
         <Columns>
             <asp:BoundField

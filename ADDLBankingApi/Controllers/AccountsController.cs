@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ADDLBankingApi.Models;
@@ -87,16 +88,23 @@ namespace ADDLBankingApi.Controllers
         [ResponseType(typeof(Account))]
         public IHttpActionResult DeleteAccount(int id)
         {
-            Account account = db.Account.Find(id);
-            if (account == null)
+            try
             {
-                return NotFound();
+                Account account = db.Account.Find(id);
+                if (account == null)
+                {
+                    return NotFound();
+                }
+
+                db.Account.Remove(account);
+                db.SaveChanges();
+
+                return Ok(account);
             }
-
-            db.Account.Remove(account);
-            db.SaveChanges();
-
-            return Ok(account);
+            catch (Exception)
+            {
+                return Content(HttpStatusCode.NotAcceptable, "Database Account table relationship error.");
+            }
         }
 
         protected override void Dispose(bool disposing)

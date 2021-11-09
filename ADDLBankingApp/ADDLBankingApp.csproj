@@ -142,6 +142,7 @@
     <Content Include="About.aspx" />
     <Content Include="Assets\Images\addc-logo.png" />
     <Content Include="Assets\Images\addl-logo-white.png" />
+    <Content Include="Assets\Images\background.jpg" />
     <Content Include="Assets\Styles\Sidebar\Sidebar.css" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />

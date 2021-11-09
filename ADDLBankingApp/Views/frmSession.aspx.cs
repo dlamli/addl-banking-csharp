@@ -61,5 +61,12 @@ namespace ADDLBankingApp.Views
                 lblStatus.Visible = true;
             }
         }
+
+        protected void gvSession_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            init();
+            gvSession.PageIndex = e.NewPageIndex;
+            gvSession.DataBind();
+        }
     }
 }

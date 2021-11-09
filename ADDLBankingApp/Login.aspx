@@ -94,7 +94,7 @@
             width: 100%; /* Full width */
             height: 100%; /* Full height */
             overflow: auto; /* Enable scroll if needed */
-            background-color: #202124;
+           background: url("/Assets/Images/background.jpg");
             padding-top: 50px;
         }
 
@@ -102,8 +102,8 @@
         .modal-content {
             background-color: #fefefe;
             margin: 5% auto 10% auto; /* 5% from the top, 15% from the bottom and centered */
-            border: 1px solid #888;
             width: 30%; /* Could be more or less, depending on screen size */
+            border-radius:15px;
         }
 
         /* Style the horizontal ruler */
@@ -148,7 +148,7 @@
             }
         }
 
-        #txtPassword, #txtUsername {
+        #txtPassword, #txtUsername,#btnSignIn {
             font-size: 16px;
         }
     </style>

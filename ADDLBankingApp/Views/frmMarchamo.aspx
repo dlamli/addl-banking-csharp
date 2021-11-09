@@ -18,6 +18,14 @@
             $('#myModalManagement').modal('hide'); //closes maintenance window
         }
 
+        function openModalMsg() {
+            $('#myModalMsg').modal('show'); //ventana de mensajes
+        }
+
+        function CloseModalMsg() {
+            $('#myModalMsg').modal('hide');//cierra ventana de mensajes
+        }
+
         $(document).ready(function () { //filters datagridview
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
@@ -322,7 +330,7 @@
                 <div class="modal-body">
                     <p>
                         <asp:Literal
-                            ID="Literal1"
+                            ID="ltrMarchamoMessage"
                             runat="server" />
                     </p>
                 </div>

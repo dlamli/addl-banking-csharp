@@ -172,7 +172,7 @@
                             <td>
                                 <asp:Literal
                                     ID="ltrAccount"
-                                    Text="Account"
+                                    Text="IBAN"
                                     runat="server" />
                             <td>
                                 <asp:DropDownList

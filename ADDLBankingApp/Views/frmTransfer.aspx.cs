@@ -166,6 +166,7 @@ namespace ADDLBankingApp.Views
         {
             ltrTitleManagement.Text = "New Transfer";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
+            txtDescription.Text = string.Empty;
             btnConfirmManagement.Visible = true;
             ltrIdManagement.Visible = true;
             txtIdManagement.Visible = true;

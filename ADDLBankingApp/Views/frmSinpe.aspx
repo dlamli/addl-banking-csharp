@@ -214,7 +214,7 @@
                                     ControlToValidate="txtAccountTarget"
                                     ValidationExpression="^\d+$"
                                     EnableClientScript="true"
-                                    ErrorMessage="Please enter number with decimals only"
+                                    ErrorMessage="Please enter number only"
                                     Display="Dynamic"
                                     SetFocusOnError="True" />
                             </td>

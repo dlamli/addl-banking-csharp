@@ -176,7 +176,7 @@
                                     ForeColor="Red"
                                     ControlToValidate="txtAccountDestiny" 
                                     EnableClientScript="true"
-                                    ErrorMessage="AccountDestiny is required"
+                                    ErrorMessage="Account Destination is required"
                                     Display="Dynamic"
                                     SetFocusOnError="True" 
                                     ></asp:RequiredFieldValidator>   

@@ -197,7 +197,7 @@
                             <td>
                                 <asp:Literal
                                     ID="ltrAccountId"
-                                    Text="AccountId"
+                                    Text="IBAN"
                                     runat="server" />
                             </td>
                             <td>
