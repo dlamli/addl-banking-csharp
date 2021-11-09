@@ -86,13 +86,6 @@
         </Columns>
 
     </asp:GridView>
-    <asp:LinkButton
-        ID="btnNew"
-        type="Button"
-        CssClass="btn btn-success"
-        runat="server"
-        Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
-        OnClick="btnNew_Click" />
     <asp:Label
         ID="lblStatus"
         ForeColor="#FFF7F7"
@@ -220,22 +213,6 @@
                         ForeColor="#FFF7F7"
                         Visible="False"
                         runat="server" />
-                </div>
-                <div class="modal-footer">
-                    <asp:LinkButton
-                        type="button"
-                        OnClick="btnConfirmManagement_Click"
-                        CssClass="btn btn-success"
-                        ID="btnConfirmManagement"
-                        runat="server"
-                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm" />
-                    <asp:LinkButton
-                        type="button"
-                        OnClick="btnCancelManagement_Click"
-                        CssClass="btn btn-danger"
-                        ID="btnCancelManagement"
-                        runat="server"
-                        Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel" />
                 </div>
             </div>
         </div>

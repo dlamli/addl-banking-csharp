@@ -21,7 +21,7 @@
         $(document).ready(function () { //filters datagridview
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#MainContent_gvPayment tr").filter(function () {
+                $("#MainContent_gvMarchamo tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
@@ -90,7 +90,8 @@
         CssClass="btn btn-success"
         runat="server"
         Text="<span aria-hidden='true' glyphicon-plus></span>New"
-        OnClick="btnNew_Click"/>
+        OnClick="btnNew_Click"
+        CausesValidation="false"/>
 
     <asp:Label 
         ID="lblStatus"
@@ -159,14 +160,16 @@
                                     ID="txtName"
                                     runat="server"
                                     CssClass="form-control" />
-
                                 <asp:RequiredFieldValidator 
                                     ID="rfvName" 
                                     runat="server"
+                                    ForeColor="Red"
+                                    ControlToValidate="txtName" 
+                                    EnableClientScript="true"
                                     ErrorMessage="Name is required"
-                                    ControlToValidate="txtName"
-                                    ForeColor="Maroon"
-                                    />
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>   
                             </td>
                         </tr>
                         <tr>
@@ -181,14 +184,26 @@
                                     ID="txtAmount"
                                     runat="server"
                                     CssClass="form-control" />
-
                                 <asp:RequiredFieldValidator 
                                     ID="rfvAmount" 
                                     runat="server"
+                                    ForeColor="Red"
+                                    ControlToValidate="txtAmount" 
+                                    EnableClientScript="true"
                                     ErrorMessage="Amount is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>   
+                                <asp:RegularExpressionValidator
+                                    ID="revAmount"
+                                    runat="server"
+                                    ForeColor="Red"
                                     ControlToValidate="txtAmount"
-                                    ForeColor="Maroon"
-                                    />
+                                    ValidationExpression="^\d+$"
+                                    EnableClientScript="true"
+                                    ErrorMessage="Please enter number only"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" />
                             </td>
                         </tr>
                         <tr>
@@ -202,15 +217,18 @@
                                 <asp:TextBox
                                     ID="txtNumberPlate"
                                     runat="server"
-                                    CssClass="form-control" />
-
+                                    CssClass="form-control" 
+                                    MaxLength="10"/>
                                 <asp:RequiredFieldValidator 
                                     ID="rfvNumberPlate" 
                                     runat="server"
-                                    ErrorMessage="Plate Number is required"
-                                    ControlToValidate="txtNumberPlate"
-                                    ForeColor="Maroon"
-                                    />
+                                    ForeColor="Red"
+                                    ControlToValidate="txtNumberPlate" 
+                                    EnableClientScript="true"
+                                    ErrorMessage="NumberPlate is required"
+                                    Display="Dynamic"
+                                    SetFocusOnError="True" 
+                                    ></asp:RequiredFieldValidator>   
                             </td>
                         </tr>
                         <tr>
@@ -283,8 +301,40 @@
                 </p>
             </div>
                 <div class="modal-footer">
-                    <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnConfirmModal" OnClick="btnConfirmModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar"/>
-                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelModal" OnClick="btnCancelModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar"/>
+                    <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnConfirmModal" OnClick="btnConfirmModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar" CausesValidation="false"/>
+                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelModal" OnClick="btnCancelModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" CausesValidation="false"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--Modal Message--%>
+    <div id="myModalMsg" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">System Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <asp:Literal
+                            ID="Literal1"
+                            runat="server" />
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton
+                        type="button"
+                        CssClass="btn btn-success"
+                        ID="btnModalMessage"
+                        OnClick="btnModalMessage_Click"
+                        runat="server"
+                        CausesValidation="false"
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Continue" />
                 </div>
             </div>
         </div>

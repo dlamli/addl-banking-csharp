@@ -70,6 +70,10 @@ namespace ADDLBankingApp.Views
         {
             ltrTitleManagement.Text = "New Marchamo";
             btnConfirmManagement.ControlStyle.CssClass = "btn btn-sucess";
+            txtIdManagement.Text = string.Empty;
+            txtName.Text = string.Empty;
+            txtAmount.Text = string.Empty;
+            txtNumberPlate.Text = string.Empty;
             btnConfirmManagement.Visible = true;
             ltrIdManagement.Visible = true;
             txtIdManagement.Visible = true;
@@ -102,10 +106,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(marchamoInserted.Id.ToString()))
                 {
-                    lblResult.Text = "Marchamo created";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Marchamo created");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -133,10 +134,7 @@ namespace ADDLBankingApp.Views
 
                 if (!string.IsNullOrEmpty(marchamoUpdated.Id.ToString()))
                 {
-                    lblResult.Text = "Marchamo updated";
-                    lblResult.Visible = true;
-                    lblResult.ForeColor = Color.Green;
-                    btnConfirmManagement.Visible = false;
+                    renderModalMessage("Marchamo updated");
                     init();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalManagement(); } );", true);
@@ -162,12 +160,7 @@ namespace ADDLBankingApp.Views
                 Models.Marchamo marchamo = await marchamoManager.deleteMarchamo(lblRemoveCode.Text, Session["Token"].ToString());
                 if (!string.IsNullOrEmpty(marchamo.Id.ToString()))
                 {
-                    lblRemoveCode.Text = string.Empty;
-                    ltrModalMessage.Text = "Marchamo deleted";
-                    btnConfirmModal.Visible = false;
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
-
+                    renderModalMessage("Marchamo deleted");
                     init();
                 }
             }
@@ -213,6 +206,7 @@ namespace ADDLBankingApp.Views
                     break;
                 case "removeMarchamo":
                     lblRemoveCode.Text = row.Cells[0].Text;
+                    lblRemoveCode.Visible = false;
                     ltrModalMessage.Text = "Are you sure you want to delete Loan #" + lblRemoveCode.Text + "?";
                     ScriptManager.RegisterStartupScript(this,
                         this.GetType(), "LaunchServerSide", "$(function() { openModal(); } );", true);
@@ -220,6 +214,19 @@ namespace ADDLBankingApp.Views
                 default:
                     break;
             }
+        }
+
+
+        public void renderModalMessage(string text)
+        {
+            ltrModalMessage.Text = text;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() {openModalMsg(); } );", true);
+        }
+
+
+        protected void btnModalMessage_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModalMsg(); });", true);
         }
     }
 }
