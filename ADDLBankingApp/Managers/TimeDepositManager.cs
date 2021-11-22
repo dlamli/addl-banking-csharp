@@ -16,7 +16,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// TimeDeposit Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/TimeDeposits/";
+        string urlBase = "http://localhost:3000/api/TimeDeposits/";
 
         /// <summary>
         /// Get Client

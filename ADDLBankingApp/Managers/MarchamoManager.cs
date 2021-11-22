@@ -16,7 +16,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// Marchamo Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/Marchamoes/";
+        string urlBase = "http://localhost:3000/api/Marchamoes/";
 
         /// <summary>
         /// Get Client

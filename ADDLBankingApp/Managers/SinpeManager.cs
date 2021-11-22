@@ -16,7 +16,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// SinpeM Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/SinpeMs/";
+        string urlBase = "http://localhost:3000/api/SinpeMs/";
 
         /// <summary>
         /// Get Client

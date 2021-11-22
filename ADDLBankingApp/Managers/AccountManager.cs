@@ -16,7 +16,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// Account Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/Accounts/";
+        string urlBase = "http://localhost:3000/api/Accounts/";
 
         /// <summary>
         /// Get Client

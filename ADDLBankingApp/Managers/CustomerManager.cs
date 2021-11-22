@@ -15,8 +15,8 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// Customer Enpoints
         /// </summary>
-        string urlLogin = "http://localhost:49220/api/login/authenticate/";
-        string urlBase = "http://localhost:49220/api/Customers/";
+        string urlLogin = "http://localhost:3000/api/login/authenticate/";
+        string urlBase = "http://localhost:3000/api/Customers/";
 
 
         /// <summary>

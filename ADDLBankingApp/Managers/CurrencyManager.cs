@@ -16,7 +16,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// Currency Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/Currencies/";
+        string urlBase = "http://localhost:3000/api/Currencies/";
 
         /// <summary>
         /// Get Client

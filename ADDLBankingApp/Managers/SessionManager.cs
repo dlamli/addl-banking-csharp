@@ -16,7 +16,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// Session Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/Sessions/";
+        string urlBase = "http://localhost:3000/api/Sessions/";
 
         /// <summary>
         /// Get Client

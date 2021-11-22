@@ -16,7 +16,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// Role Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/Roles/";
+        string urlBase = "http://localhost:3000/api/Roles/";
 
         /// <summary>
         /// Get Client

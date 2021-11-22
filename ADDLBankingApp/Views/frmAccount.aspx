@@ -1,4 +1,4 @@
-﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmAccount.aspx.cs" Inherits="ADDLBankingApp.Views.frmAccount" %>
+﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmAccount.aspx.cs" Inherits="ADDLBankingApp.Views.frmAccount" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -46,6 +46,46 @@
         placeholder="Search"
         class="form-control"
         type="text" />
+    <br />
+    <asp:LinkButton
+        ID="btnExportXls"
+        type="Button"
+        CssClass="btn btn-success"
+        runat="server"
+        OnClick="btnExportXls_Click"
+        CausesValidation="false">
+        <i class="	glyphicon glyphicon-th-list"></i>&nbsp;
+        Export to Excel
+    </asp:LinkButton>
+    <asp:LinkButton
+        ID="btnExportCsv"
+        type="Button"
+        CssClass="btn btn-success"
+        runat="server"
+        CausesValidation="false"
+        OnClick="btnExportCsv_Click">
+        <i class=" glyphicon glyphicon-th-list"></i>&nbsp;
+        Export to CSV
+    </asp:LinkButton>
+    <asp:LinkButton
+        ID="btnExportPdf"
+        type="Button"
+        CssClass="btn btn-danger"
+        runat="server"
+        OnClick="btnExportPdf_Click"
+        CausesValidation="false">
+        <i class="	glyphicon glyphicon-th-list"></i>&nbsp;
+        Export to PDF
+    </asp:LinkButton>
+    <asp:LinkButton
+        ID="btnCopy"
+        type="Button"
+        CssClass="btn btn-primary"
+        runat="server"
+        CausesValidation="false">
+        <i class="	glyphicon glyphicon-th-list"></i>&nbsp;
+        Copy to clipboard
+    </asp:LinkButton>
     <asp:GridView
         ID="gvAccount"
         runat="server"
@@ -55,8 +95,7 @@
         HeaderStyle-BackColor="#204969"
         HeaderStyle-ForeColor="#FFF7F7"
         AlternatingRowStyle-BackColor="#DADADA"
-        OnRowCommand="gvAccount_RowCommand"
-        >
+        OnRowCommand="gvAccount_RowCommand">
 
         <Columns>
 
@@ -109,8 +148,8 @@
         CssClass="btn btn-success"
         runat="server"
         Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
-        OnClick="btnNew_Click" 
-        CausesValidation="false"/>
+        OnClick="btnNew_Click"
+        CausesValidation="false" />
     <asp:Label
         ID="lblStatus"
         ForeColor="Red"
@@ -200,24 +239,23 @@
                                     ID="ltrDescription"
                                     Text="Description"
                                     runat="server" />
-                                </td>
+                            </td>
 
                             <td>
                                 <asp:TextBox
                                     ID="txtDescription"
                                     runat="server"
                                     CssClass="form-control" />
-                                <asp:RequiredFieldValidator 
-                                    ID="rfvDescription" 
+                                <asp:RequiredFieldValidator
+                                    ID="rfvDescription"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtDescription" 
+                                    ControlToValidate="txtDescription"
                                     EnableClientScript="true"
                                     ErrorMessage="Description is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator>   
-                                </td>
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
+                            </td>
 
                         </tr>
                         <tr>
@@ -249,16 +287,15 @@
                                     ID="txtBalance"
                                     runat="server"
                                     CssClass="form-control" />
-                                <asp:RequiredFieldValidator 
-                                    ID="RequiredFieldValidator3" 
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator3"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtBalance" 
+                                    ControlToValidate="txtBalance"
                                     EnableClientScript="true"
                                     ErrorMessage="Balance is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator>   
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator
                                     ID="RegularExpressionValidator"
                                     runat="server"
@@ -283,17 +320,16 @@
                                     ID="txtPhoneNumber"
                                     runat="server"
                                     MaxLength="8"
-                                    CssClass="form-control"/>
-                                <asp:RequiredFieldValidator 
-                                    ID="rfvPhoneNumber" 
+                                    CssClass="form-control" />
+                                <asp:RequiredFieldValidator
+                                    ID="rfvPhoneNumber"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtPhoneNumber" 
+                                    ControlToValidate="txtPhoneNumber"
                                     EnableClientScript="true"
                                     ErrorMessage="Phone Number is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator>   
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator
                                     runat="server"
                                     ID="RegularExpressionValidator1"
