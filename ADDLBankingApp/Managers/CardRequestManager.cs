@@ -15,7 +15,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// CardRequest Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/CardRequests/";
+        string urlBase = "http://localhost:3000/api/CardRequests/";
 
         /// <summary>
         /// Get Client

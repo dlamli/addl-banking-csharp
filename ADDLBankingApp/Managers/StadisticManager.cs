@@ -15,7 +15,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// Stadistic Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/Stadistics/";
+        string urlBase = "http://localhost:3000/api/Stadistics/";
 
 
         HttpClient GetStadistic()

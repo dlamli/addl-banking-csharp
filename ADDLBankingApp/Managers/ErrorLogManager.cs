@@ -16,7 +16,7 @@ namespace ADDLBankingApp.Managers
         /// <summary>
         /// ErrorLog Endpoints
         /// </summary>
-        string urlBase = "http://localhost:49220/api/ErrorLogs/";
+        string urlBase = "http://localhost:3000/api/ErrorLogs/";
 
         HttpClient GetErrorLog()
         {
