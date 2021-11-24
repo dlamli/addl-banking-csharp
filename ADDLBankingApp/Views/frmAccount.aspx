@@ -65,7 +65,7 @@
 
     </script>
 
-    <h1>Account Management</h1>
+    <h1>Account Management</h1
     <asp:GridView
         ID="gvAccount"
         runat="server"

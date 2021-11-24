@@ -338,6 +338,5 @@ namespace ADDLBankingApp.Views
 
             return IBAN;
         }
-
     }
 }
