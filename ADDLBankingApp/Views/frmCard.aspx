@@ -2,6 +2,30 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[id*=gvCard]').prepend($("<thead></thead>").append($(this).find("tr:first"))).DataTable({
+                dom: 'Bfrtip',
+                'aoColumnDefs': [{ 'bSortable': false, 'aTargets': [0] }],
+                'iDisplayLength': 20,
+                buttons: [
+                    { extend: 'copy', text: 'Copy to clipboard', className: 'exportExcel', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'excel', text: 'Export to Excel', className: 'exportExcel', filename: 'Cards_Excel', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'csv', text: 'Export to CSV', className: 'exportExcel', filename: 'Cards_Csv', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'pdf', text: 'Export to PDF', className: 'exportExcel', filename: 'Cards_Pdf', orientation: 'landscape', pageSize: 'LEGAL', exportOptions: { modifier: { page: 'all' }, columns: ':visible' } }
+                ]
+            });
+        });
+    </script>
     <!-- Bootstrap -->
     <!-- Bootstrap DatePicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
@@ -58,11 +82,6 @@
 
 
     <h1>Card Management</h1>
-    <input
-        id="myInput"
-        placeholder="Search"
-        class="form-control"
-        type="text" />
     <asp:GridView
         ID="gvCard"
         runat="server"
@@ -72,8 +91,7 @@
         HeaderStyle-BackColor="#204969"
         HeaderStyle-ForeColor="#FFF7F7"
         AlternatingRowStyle-BackColor="#DADADA"
-        OnRowCommand="gvCard_RowCommand"
-        >
+        OnRowCommand="gvCard_RowCommand">
 
         <Columns>
 
@@ -118,7 +136,7 @@
         runat="server"
         Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
         OnClick="btnNew_Click"
-        CausesValidation="false"/>
+        CausesValidation="false" />
     <asp:Label
         ID="lblStatus"
         ForeColor="#FFF7F7"
@@ -185,21 +203,20 @@
                                     runat="server" />
                             </td>
                             <td>
-                                 <asp:TextBox
+                                <asp:TextBox
                                     ID="txtCardNumber"
                                     runat="server"
                                     CssClass="form-control"
-                                    MaxLength="16"/>
-                                <asp:RequiredFieldValidator 
-                                    ID="rfvCardNumber" 
+                                    MaxLength="16" />
+                                <asp:RequiredFieldValidator
+                                    ID="rfvCardNumber"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtCardNumber" 
+                                    ControlToValidate="txtCardNumber"
                                     EnableClientScript="true"
                                     ErrorMessage="Card Number is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator>   
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator
                                     ID="revCardNumber"
                                     runat="server"
@@ -224,18 +241,16 @@
                                     ID="txtCCV"
                                     runat="server"
                                     CssClass="form-control"
-                                    MaxLength="3"
-                                    />
-                                <asp:RequiredFieldValidator 
-                                    ID="rfvCCV" 
+                                    MaxLength="3" />
+                                <asp:RequiredFieldValidator
+                                    ID="rfvCCV"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtCCV" 
+                                    ControlToValidate="txtCCV"
                                     EnableClientScript="true"
                                     ErrorMessage="CCV is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator>   
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator
                                     ID="revCCV"
                                     runat="server"
@@ -246,7 +261,7 @@
                                     ErrorMessage="Please enter number only"
                                     Display="Dynamic"
                                     SetFocusOnError="True" />
-                           </td>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -256,21 +271,19 @@
                                     runat="server" />
                             </td>
                             <td>
-                                <asp:TextBox ID="txtDueDate" 
-                                    runat="server" 
-                                    CssClass="form-control"
-                                    ></asp:TextBox>
-                                <asp:RequiredFieldValidator 
-                                    ID="rfvDueDate" 
+                                <asp:TextBox ID="txtDueDate"
+                                    runat="server"
+                                    CssClass="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="rfvDueDate"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtDueDate" 
+                                    ControlToValidate="txtDueDate"
                                     EnableClientScript="true"
                                     ErrorMessage="DueDate is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator>   
-                            </td>        
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -285,16 +298,15 @@
                                     MaxLength="50"
                                     runat="server"
                                     CssClass="form-control" />
-                                <asp:RequiredFieldValidator 
-                                    ID="rfvProvider" 
+                                <asp:RequiredFieldValidator
+                                    ID="rfvProvider"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtProvider" 
+                                    ControlToValidate="txtProvider"
                                     EnableClientScript="true"
                                     ErrorMessage="Provider is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator>
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
                             </td>
                         </tr>
                     </table>
@@ -370,7 +382,7 @@
         </div>
     </div>
 
-     <%--Modal Message--%>
+    <%--Modal Message--%>
     <div id="myModalMsg" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">

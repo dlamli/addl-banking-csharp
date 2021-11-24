@@ -2,6 +2,31 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[id*=gvAccount]').prepend($("<thead></thead>").append($(this).find("tr:first"))).DataTable({
+                dom: 'Bfrtip',
+                'aoColumnDefs': [{ 'bSortable': false, 'aTargets': [0] }],
+                'iDisplayLength': 20,
+                buttons: [
+                    { extend: 'copy', text: 'Copy to clipboard', className: 'exportExcel', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'excel', text: 'Export to Excel', className: 'exportExcel', filename: 'Accounts_Excel', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'csv', text: 'Export to CSV', className: 'exportExcel', filename: 'Accounts_Csv', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'pdf', text: 'Export to PDF', className: 'exportExcel', filename: 'Accounts_Pdf', orientation: 'landscape', pageSize: 'LEGAL', exportOptions: { modifier: { page: 'all' }, columns: ':visible' } }
+                ]
+            });
+        });
+    </script>
+
     <script type="text/javascript">
 
         function openModal() {
@@ -40,52 +65,7 @@
 
     </script>
 
-    <h1>Account Management</h1>
-    <input
-        id="myInput"
-        placeholder="Search"
-        class="form-control"
-        type="text" />
-    <br />
-    <asp:LinkButton
-        ID="btnExportXls"
-        type="Button"
-        CssClass="btn btn-success"
-        runat="server"
-        OnClick="btnExportXls_Click"
-        CausesValidation="false">
-        <i class="	glyphicon glyphicon-th-list"></i>&nbsp;
-        Export to Excel
-    </asp:LinkButton>
-    <asp:LinkButton
-        ID="btnExportCsv"
-        type="Button"
-        CssClass="btn btn-success"
-        runat="server"
-        CausesValidation="false"
-        OnClick="btnExportCsv_Click">
-        <i class=" glyphicon glyphicon-th-list"></i>&nbsp;
-        Export to CSV
-    </asp:LinkButton>
-    <asp:LinkButton
-        ID="btnExportPdf"
-        type="Button"
-        CssClass="btn btn-danger"
-        runat="server"
-        OnClick="btnExportPdf_Click"
-        CausesValidation="false">
-        <i class="	glyphicon glyphicon-th-list"></i>&nbsp;
-        Export to PDF
-    </asp:LinkButton>
-    <asp:LinkButton
-        ID="btnCopy"
-        type="Button"
-        CssClass="btn btn-primary"
-        runat="server"
-        CausesValidation="false">
-        <i class="	glyphicon glyphicon-th-list"></i>&nbsp;
-        Copy to clipboard
-    </asp:LinkButton>
+    <h1>Account Management</h1
     <asp:GridView
         ID="gvAccount"
         runat="server"
