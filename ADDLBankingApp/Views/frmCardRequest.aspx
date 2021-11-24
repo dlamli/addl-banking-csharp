@@ -2,7 +2,31 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-        <!-- Bootstrap -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[id*=gvCard]').prepend($("<thead></thead>").append($(this).find("tr:first"))).DataTable({
+                dom: 'Bfrtip',
+                'aoColumnDefs': [{ 'bSortable': false, 'aTargets': [0] }],
+                'iDisplayLength': 20,
+                buttons: [
+                    { extend: 'copy', text: 'Copy to clipboard', className: 'exportExcel', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'excel', text: 'Export to Excel', className: 'exportExcel', filename: 'CardRequests_Excel', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'csv', text: 'Export to CSV', className: 'exportExcel', filename: 'CardRequests_Csv', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'pdf', text: 'Export to PDF', className: 'exportExcel', filename: 'CardRequests_Pdf', orientation: 'landscape', pageSize: 'LEGAL', exportOptions: { modifier: { page: 'all' }, columns: ':visible' } }
+                ]
+            });
+        });
+    </script>
+    <!-- Bootstrap -->
     <!-- Bootstrap DatePicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
@@ -53,11 +77,6 @@
 
     <h1>CardRequest Management</h1>
 
-    <input
-        id="myInput"
-        placeholder="Search"
-        class="form-control"
-        type="text" />
     <asp:GridView
         ID="gvCardRequest"
         runat="server"
@@ -67,8 +86,7 @@
         HeaderStyle-BackColor="#204969"
         HeaderStyle-ForeColor="#FFF7F7"
         AlternatingRowStyle-BackColor="#DADADA"
-        OnRowCommand="gvCardRequest_RowCommand"
-        >
+        OnRowCommand="gvCardRequest_RowCommand">
 
         <Columns>
 
@@ -104,14 +122,12 @@
         runat="server"
         Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
         OnClick="btnNew_Click"
-        CausesValidation="false"
-        />
+        CausesValidation="false" />
     <asp:Label
         ID="lblStatus"
         ForeColor="#FFF7F7"
         runat="server"
-        Visible="false"
-        />
+        Visible="false" />
 
 
 
@@ -173,24 +189,22 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtRequestDate"
-                                    runat="server" 
+                                    runat="server"
                                     CssClass="form-control"
                                     Enabled="false"
-                                    ReadOnly="true"
-                                    ></asp:TextBox>
-                                <asp:RequiredFieldValidator 
-                                    ID="rfvRequestDate" 
+                                    ReadOnly="true"></asp:TextBox>
+                                <asp:RequiredFieldValidator
+                                    ID="rfvRequestDate"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtRequestDate" 
+                                    ControlToValidate="txtRequestDate"
                                     EnableClientScript="true"
                                     ErrorMessage="Request Date is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator> 
-                            </td> 
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
+                            </td>
                         </tr>
-                        
+
                     </table>
                     <asp:Label
                         ID="lblResult"
