@@ -43,11 +43,6 @@ namespace ADDLBankingApp.Views
             }
         }
 
-        protected void gvErrorlog_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            init();
-            gvErrorlog.PageIndex = e.NewPageIndex;
-            gvErrorlog.DataBind();
-        }
+        
     }
 }
