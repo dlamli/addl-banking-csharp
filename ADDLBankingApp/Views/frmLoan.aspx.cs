@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -18,6 +19,11 @@ namespace ADDLBankingApp.Views
     {
         IEnumerable<Loan> loan = new ObservableCollection<Loan>();
         LoanManager loanManager = new LoanManager();
+
+        public string graphLabels = string.Empty;
+        public string graphBackgroundColors = string.Empty;
+        public string graphData = string.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,7 +32,7 @@ namespace ADDLBankingApp.Views
                 else
                 {
                     init();
-
+                    createGraph();
                     string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
 
                     //
@@ -63,6 +69,29 @@ namespace ADDLBankingApp.Views
             {
                 lblStatus.Text = "An error ocurred to load loan list.";
                 lblStatus.Visible = true;
+            }
+        }
+        //
+        //Creates the graph
+        private async void createGraph()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColors = new StringBuilder();
+
+            var random = new Random();
+
+            loan = await loanManager.GetAllLoan(Session["Token"].ToString());
+
+            foreach (var loans in loan.GroupBy(t => t.Type).Select(v => v.First()).Distinct())
+            {
+                labels.Append(String.Format("'{0}',", loans.Type));
+                data.Append(String.Format("'{0}',", loan.Where(v => v.Type == loans.Type).Count()));
+                backgroundColors.Append(String.Format("'{0}',", String.Format("#{0:X6}", random.Next(0x1000000))));
+
+                graphLabels = labels.ToString().Substring(0, labels.Length - 1);
+                graphData = data.ToString().Substring(0, data.Length - 1);
+                graphBackgroundColors = backgroundColors.ToString().Substring(0, backgroundColors.Length - 1);
             }
         }
 

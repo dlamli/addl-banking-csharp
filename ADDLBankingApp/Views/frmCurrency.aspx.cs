@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -16,12 +17,24 @@ namespace ADDLBankingApp.Views
     {
         IEnumerable<Currency> currency = new ObservableCollection<Currency>();
         CurrencyManager currencyManager = new CurrencyManager();
-        static string _id = string.Empty;
+        AccountManager accountManager = new AccountManager();
+
+        public string graphLabels = string.Empty;
+        public string graphBackgroundColors = string.Empty;
+        public string graphData = string.Empty;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
-            else init();
+            if (!IsPostBack)
+            {
+                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
+                else
+                {
+                    init();
+                    createGraph();
+                }
+            }
         }
         //
         //inicializer method that obtains all currency and adds it to table as datasource
@@ -37,6 +50,29 @@ namespace ADDLBankingApp.Views
             {
                 lblStatus.Text = "An error ocurred  to load account list.";
                 lblStatus.Visible = true;
+            }
+        }
+        //
+        //Creates the graph
+        private async void createGraph()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColors = new StringBuilder();
+
+            IEnumerable<Account> accounts = await accountManager.GetAllAccount(Session["Token"].ToString());
+
+            var random = new Random();
+
+            foreach(var currency in await currencyManager.GetAllCurrency(Session["Token"].ToString()))
+            {
+                labels.Append(String.Format("'{0}',", currency.Description));
+                data.Append(String.Format("'{0}',", accounts.Where(c => c.CurrencyId == currency.Id).Count()));
+                backgroundColors.Append(String.Format("'{0}',", String.Format("#{0:X6}", random.Next(0x1000000))));
+
+                graphLabels = labels.ToString().Substring(0, labels.Length - 1);
+                graphData = data.ToString().Substring(0, data.Length - 1);
+                graphBackgroundColors = backgroundColors.ToString().Substring(0, backgroundColors.Length - 1);
             }
         }
         //
