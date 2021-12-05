@@ -122,6 +122,34 @@
         runat="server"
         Visible="false" />
 
+    <!--Gráfico-->
+    <div class="row">
+        <div class="col-sm">
+            <div id="canvas-holder" style="width: 40%;margin: 0 auto;">
+                <canvas id="vistas-chart"></canvas>
+            </div>
+            <script>
+                new Chart(document.getElementById("vistas-chart"), {
+                    type: 'doughnut',
+                    data: {
+                        labels: [<%= this.graphLabels %>],
+                        datasets: [{
+                            label: "Most used currency",
+                            backgroundColor: [<%= this.graphBackgroundColors %>],
+                            data: [<%= this.graphData %>]
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Most used currencies'
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
     <!--Management Window -->
     <div id="myModalManagement" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered">

@@ -132,6 +132,37 @@
         runat="server"
         Visible="false"/>
 
+    <!--Gráfico-->
+    <div class="row">
+        <div class="col-sm">
+            <div id="canvas-holder" style="width: 70%;margin: 0 auto;">
+                <canvas id="vistas-chart"></canvas>
+            </div>
+            <script>
+                new Chart(document.getElementById("vistas-chart"), {
+                    type: 'bar',
+                    data: {
+                        labels: [<%= this.graphLabels %>],
+                        datasets: [{
+                            label: "Most paid vehicle types car insurence",
+                            backgroundColor: [<%= this.graphBackgroundColors %>],
+                            data: [<%= this.graphData %>]
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
     <!--Management Window -->
     <div id="myModalManagement" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered">

@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using System.Drawing;
+using System.Text;
 
 namespace ADDLBankingApp.Views
 {
@@ -18,6 +19,9 @@ namespace ADDLBankingApp.Views
     {
         IEnumerable<Models.Marchamo> marchamo = new ObservableCollection<Models.Marchamo>();
         MarchamoManager marchamoManager = new MarchamoManager();
+        public string graphLabels = string.Empty;
+        public string graphBackgroundColors = string.Empty;
+        public string graphData = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,6 +30,7 @@ namespace ADDLBankingApp.Views
                 else
                 {
                     init();
+                    createGraph();
 
                     string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
 
@@ -65,7 +70,29 @@ namespace ADDLBankingApp.Views
                 lblStatus.Visible = true;
             }
         }
+        //
+        //Creates the graph
+        private async void createGraph()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColors = new StringBuilder();
 
+            var random = new Random();
+
+            marchamo = await marchamoManager.GetAllMarchamo(Session["Token"].ToString());
+
+            foreach (var insurance in marchamo.GroupBy(t => t.VehicleType).Select(v => v.First()).Distinct())
+            {
+                labels.Append(String.Format("'{0}',", insurance.VehicleType));
+                data.Append(String.Format("'{0}',", marchamo.Where(v => v.VehicleType == insurance.VehicleType).Count()));
+                backgroundColors.Append(String.Format("'{0}',", String.Format("#{0:X6}", random.Next(0x1000000))));
+
+                graphLabels = labels.ToString().Substring(0, labels.Length - 1);
+                graphData = data.ToString().Substring(0, data.Length - 1);
+                graphBackgroundColors = backgroundColors.ToString().Substring(0, backgroundColors.Length - 1);
+            }
+        }
         protected void btnNew_Click(object sender, EventArgs e)
         {
             ltrTitleManagement.Text = "New Marchamo";

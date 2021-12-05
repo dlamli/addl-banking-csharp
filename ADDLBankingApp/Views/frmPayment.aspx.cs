@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -18,6 +19,11 @@ namespace ADDLBankingApp.Views
     {
         IEnumerable<Payment> payment = new ObservableCollection<Payment>();
         PaymentManager paymentManager = new PaymentManager();
+
+        public string graphLabels = string.Empty;
+        public string graphBackgroundColors = string.Empty;
+        public string graphData = string.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -29,6 +35,7 @@ namespace ADDLBankingApp.Views
                 else
                 {
                     init();
+                    createGraph();
 
                     string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
 
@@ -83,8 +90,29 @@ namespace ADDLBankingApp.Views
                 lblStatus.Visible = true;
             }
         }
+        //
+        //Creates the graph
+        private async void createGraph()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColors = new StringBuilder();
 
+            var random = new Random();
 
+            payment = await paymentManager.GetAllPayment(Session["Token"].ToString());
+
+            foreach (var payments in payment.GroupBy(d => d.Date.ToShortDateString()).Select(v => v.First()).OrderBy(d => d.Date).Distinct())
+            {
+                labels.Append(String.Format("'{0}',", payments.Date.ToShortDateString()));
+                data.Append(String.Format("'{0}',", payment.Where(v => v.Date.ToShortDateString() == payments.Date.ToShortDateString()).Count()));
+                backgroundColors.Append(String.Format("'{0}',", String.Format("#{0:X6}", random.Next(0x1000000))));
+
+                graphLabels = labels.ToString().Substring(0, labels.Length - 1);
+                graphData = data.ToString().Substring(0, data.Length - 1);
+                graphBackgroundColors = backgroundColors.ToString().Substring(0, backgroundColors.Length - 1);
+            }
+        }
         protected void btnNew_Click(object sender, EventArgs e)
         {
             ltrTitleManagement.Text = "New Payment";

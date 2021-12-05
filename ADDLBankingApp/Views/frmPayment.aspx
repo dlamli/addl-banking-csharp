@@ -129,6 +129,38 @@
         runat="server"
         Visible="false"/>
 
+    <!--Gráfico-->
+    <div class="row">
+        <div class="col-sm">
+            <div id="canvas-holder" style="width: 80%;margin: 0 auto;">
+                <canvas id="vistas-chart"></canvas>
+            </div>
+            <script>
+                new Chart(document.getElementById("vistas-chart"), {
+                    type: 'line',
+                    data: {
+                        labels: [<%= this.graphLabels %>],
+                        datasets: [{
+                            label: "Daily payments",
+                            backgroundColor: [<%= this.graphBackgroundColors %>],
+                            data: [<%= this.graphData %>],
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
     <!--Management Window -->
     <div id="myModalManagement" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
