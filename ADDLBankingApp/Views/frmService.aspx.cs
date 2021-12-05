@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -19,20 +20,32 @@ namespace ADDLBankingApp.Views
         IEnumerable<Service> services = new ObservableCollection<Service>();
         ServiceManager serviceManager = new ServiceManager();
         static string _id = string.Empty;
-        protected void Page_Load(object sender, EventArgs e)
+
+        public string lblGraphic = string.Empty;
+        public string bgColorGraphic = string.Empty;
+        public string dataGraphic = string.Empty;
+
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
-                else init();
+                if (Session["Id"] == null)
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
+                else
+                {
+                    services = await serviceManager.GetAllService(Session["Token"].ToString());
+                    init();
+                    getDataGraphic();
+                }
             }
         }
 
-        public async void init()
+        public void init()
         {
             try
             {
-                services = await serviceManager.GetAllService(Session["Token"].ToString());
                 gvService.DataSource = services.ToList();
                 gvService.DataBind();
             }
@@ -42,6 +55,34 @@ namespace ADDLBankingApp.Views
                 lblStatus.Visible = true;
             }
         }
+
+        private void getDataGraphic()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColor = new StringBuilder();
+            var random = new Random();
+
+            foreach (var service in services.GroupBy(e => e.Status)
+                  .Select(group => new
+                  {
+                      Status = group.Key,
+                      Quantity = group.Count()
+                  }).OrderBy(c => c.Status))
+            {
+                string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
+                labels.AppendFormat("'{0}',", service.Status);
+                data.AppendFormat("'{0}',", service.Quantity);
+                backgroundColor.AppendFormat("'{0}',", color);
+
+                lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
+                dataGraphic = data.ToString().Substring(0, data.Length - 1);
+                bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);
+            }
+        }
+
+
+
         protected async void btnConfirmManagement_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtIdManagement.Text)) //Insert

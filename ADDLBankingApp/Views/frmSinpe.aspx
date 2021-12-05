@@ -123,6 +123,34 @@
         runat="server"
         Visible="false" />
 
+    <%--Graph--%>
+    <div class="row">
+        <div class="col-sm">
+            <div id="canvas-holder" style="width: 40%">
+                <canvas id="vistas-chart"></canvas>
+            </div>
+            <script>
+                new Chart(document.getElementById("vistas-chart"), {
+                    type: 'pie',
+                    data: {
+                        labels: [<%= this.lblGraphic %>],
+                        datasets: [{
+                            label: "Sinpe transfers history",
+                            backgroundColor: [<%= this.bgColorGraphic %>],
+                            data: [<%= this.dataGraphic %>]
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Sinpe history'
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
     <!--Management Window -->
     <div id="myModalManagement" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
