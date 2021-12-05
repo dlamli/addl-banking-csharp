@@ -11,23 +11,33 @@ using ADDLBankingApp.Managers;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System;
+using System.Text;
 
 namespace ADDLBankingApp.Views
 {
     public partial class frmCustomerManager : System.Web.UI.Page
     {
-        IEnumerable<Customer> customer = new ObservableCollection<Customer>();
+        IEnumerable<Customer> customers = new ObservableCollection<Customer>();
         CustomerManager customerManager = new CustomerManager();
 
+        public string lblGraphic = string.Empty;
+        public string bgColorGraphic = string.Empty;
+        public string dataGraphic = string.Empty;
 
-        protected void Page_Load(object sender, EventArgs e)
+
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
+                if (Session["Id"] == null)
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
                 else
                 {
+                    customers = await customerManager.GetAllCustomer(Session["Token"].ToString());
                     init();
+                    getDataGraphic();
                     string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
                     using (SqlConnection conn = new SqlConnection(connString))
                     {
@@ -47,13 +57,39 @@ namespace ADDLBankingApp.Views
             }
         }
 
+        private void getDataGraphic()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColor = new StringBuilder();
+            var random = new Random();
+
+            foreach (var customer in customers.GroupBy(e => e.Status)
+                  .Select(group => new
+                  {
+                      Provider = group.Key,
+                      Quantity = group.Count()
+                  }).OrderBy(c => c.Provider))
+            {
+                string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
+                labels.AppendFormat("'{0}',", customer.Provider);
+                data.AppendFormat("'{0}',", customer.Quantity);
+                backgroundColor.AppendFormat("'{0}',", color);
+
+                lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
+                dataGraphic = data.ToString().Substring(0, data.Length - 1);
+                bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);
+            }
+        }
+
+
+
 
         public async void init()
         {
             try
             {
-                customer = await customerManager.GetAllCustomer(Session["Token"].ToString());
-                gvCustomer.DataSource = customer.ToList();
+                gvCustomer.DataSource = customers.ToList();
                 gvCustomer.DataBind();
             }
             catch (Exception)
@@ -193,7 +229,7 @@ namespace ADDLBankingApp.Views
                     init();
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
                 renderModalMessage("Customer table error with foreign key.");
                 ErrorLogManager errorManager = new ErrorLogManager();

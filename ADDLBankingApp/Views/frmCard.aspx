@@ -128,6 +128,7 @@
         </Columns>
 
     </asp:GridView>
+
     <asp:LinkButton
         ID="btnNew"
         type="Button"
@@ -142,7 +143,33 @@
         runat="server"
         Visible="false" />
 
-
+    <%--Chartjs--%>
+    <div class="row">
+        <div class="col-sm">
+            <div id="canvas-holder" style="width: 40%">
+                <canvas id="vistas-chart"></canvas>
+            </div>
+            <script>
+                new Chart(document.getElementById("vistas-chart"), {
+                    type: 'pie',
+                    data: {
+                        labels: [<%= this.lblGraphic %>],
+                        datasets: [{
+                            label: "Card View",
+                            backgroundColor: [<%= this.bgColorGraphic %>],
+                            data: [<%= this.dataGraphic %>]
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Card View'
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
 
     <!--Management Window -->
     <div id="myModalManagement" class="modal fade" role="dialog">
