@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,30 +15,66 @@ namespace ADDLBankingApp.Views
     public partial class frmCard : System.Web.UI.Page
     {
 
-        IEnumerable<Card> card = new ObservableCollection<Card>();
+        IEnumerable<Card> cards = new ObservableCollection<Card>();
         CardManager cardManager = new CardManager();
 
-        protected void Page_Load(object sender, EventArgs e)
+        public string lblGraphic = string.Empty;
+        public string bgColorGraphic = string.Empty;
+        public string dataGraphic = string.Empty;
+
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
-                else init();
+                if (Session["Id"] == null)
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
+                else
+                {
+                    cards = await cardManager.GetAllCard(Session["Token"].ToString());
+                    init();
+                    GetDataGraphic();
+                }
             }
         }
 
-        public async void init()
+        public void init()
         {
             try
             {
-                card = await cardManager.GetAllCard(Session["Token"].ToString());
-                gvCard.DataSource = card.ToList();
+                gvCard.DataSource = cards.ToList();
                 gvCard.DataBind();
             }
-            catch (Exception )
+            catch (Exception)
             {
                 lblStatus.Text = "An error ocurred  to load card list.";
                 lblStatus.Visible = true;
+            }
+        }
+
+        private void GetDataGraphic()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColor = new StringBuilder();
+            var random = new Random();
+
+            foreach (var card in cards.GroupBy(e => e.Provider)
+                  .Select(group => new
+                  {
+                      Provider = group.Key,
+                      Quantity = group.Count()
+                  }).OrderBy(c => c.Provider))
+            {
+                string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
+                labels.AppendFormat("'{0}',", card.Provider);
+                data.AppendFormat("'{0}',", card.Quantity);
+                backgroundColor.AppendFormat("'{0}',", color);
+
+                lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
+                dataGraphic = data.ToString().Substring(0, data.Length - 1);
+                bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);
             }
         }
 
