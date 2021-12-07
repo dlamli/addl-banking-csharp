@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
-
+using System.Text;
 
 namespace ADDLBankingApp.Views
 {
@@ -21,39 +21,36 @@ namespace ADDLBankingApp.Views
         UtilityManager utilityManager = new UtilityManager();
         static string _id = string.Empty;
 
-        protected void Page_Load(object sender, EventArgs e)
+        public string lblGraphic = string.Empty;
+        public string bgColorGraphic = string.Empty;
+        public string dataGraphic = string.Empty;
+
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
+                if (Session["Id"] == null)
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
                 else
                 {
+                    utilities = await utilityManager.GetAllUtility(Session["Token"].ToString());
+
                     init();
-                    string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
+                    getDataGraphic();
 
-                    using (SqlConnection conn = new SqlConnection(connString))
-                    {
+                    
 
-                        using (SqlCommand cmd = new SqlCommand("SELECT [Id], [IBAN] FROM [Account]"))
-                        {
-                            cmd.CommandType = CommandType.Text;
-                            cmd.Connection = conn;
-                            conn.Open();
-                            ddlAccount.DataSource = cmd.ExecuteReader();
-                            ddlAccount.DataTextField = "IBAN";
-                            ddlAccount.DataValueField = "Id";
-                            ddlAccount.DataBind();
-                        }
-                    }
                 }
             }
         }
 
-        public async void init()
+        public  void init()
         {
             try
             {
-                utilities = await utilityManager.GetAllUtility(Session["Token"].ToString());
+                
                 gvUtility.DataSource = utilities.ToList();
                 gvUtility.DataBind();
             }
@@ -61,6 +58,31 @@ namespace ADDLBankingApp.Views
             {
                 lblStatus.Text = "An error ocurred  to load Utility list.";
                 lblStatus.Visible = true;
+            }
+        }
+
+        private void getDataGraphic()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColor = new StringBuilder();
+            var random = new Random();
+
+            foreach (var utility in utilities.GroupBy(e => e.ProfitPercentage)
+                  .Select(group => new
+                  {
+                      ProfitPercentage = group.Key,
+                      Quantity = group.Count()
+                  }).OrderBy(c => c.ProfitPercentage))
+            {
+                string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
+                labels.AppendFormat("'{0}',", utility.ProfitPercentage);
+                data.AppendFormat("'{0}',", utility.Quantity);
+                backgroundColor.AppendFormat("'{0}',", color);
+
+                lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
+                dataGraphic = data.ToString().Substring(0, data.Length - 1);
+                bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);
             }
         }
 

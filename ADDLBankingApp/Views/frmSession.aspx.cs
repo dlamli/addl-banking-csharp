@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace ADDLBankingApp.Views
 {
@@ -19,39 +20,32 @@ namespace ADDLBankingApp.Views
         IEnumerable<Session> sessions = new ObservableCollection<Session>();
         SessionManager sessionManager = new SessionManager();
         static string _id = string.Empty;
-        protected void Page_Load(object sender, EventArgs e)
+        public string lblGraphic = string.Empty;
+        public string bgColorGraphic = string.Empty;
+        public string dataGraphic = string.Empty;
+
+
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
                 else
                 {
+                    sessions = await sessionManager.GetAllSession(Session["Token"].ToString());
                     init();
-                    string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
+                    getDataGraphic();
 
-                    using (SqlConnection conn = new SqlConnection(connString))
-                    {
-                        conn.Open();
-                        //using (SqlCommand cmd = new SqlCommand("SELECT [Id], [Name] FROM [Customer]"))
-                        using (var cmd = new SqlCommand("getCustomer", conn) { CommandType = CommandType.StoredProcedure })
-                        {
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Connection = conn;
-                            ddlUser.DataSource = cmd.ExecuteReader();
-                            ddlUser.DataTextField = "Name";
-                            ddlUser.DataValueField = "Id";
-                            ddlUser.DataBind();
-                        }
-                    }
                 }
+            
             }
         }
 
-        public async void init()
+        public  void init()
         {
             try
             {
-                sessions = await sessionManager.GetAllSession(Session["Token"].ToString());
+                
                 gvSession.DataSource = sessions.ToList();
                 gvSession.DataBind();
             }
@@ -62,6 +56,32 @@ namespace ADDLBankingApp.Views
             }
         }
 
-        
+
+        private void getDataGraphic()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColor = new StringBuilder();
+            var random = new Random();
+
+            foreach (var session in sessions.GroupBy(e => e.UserId)
+                  .Select(group => new
+                  {
+                      UserId = group.Key,
+                      Quantity = group.Count()
+                  }).OrderBy(c => c.UserId))
+            {
+                string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
+                labels.AppendFormat("'{0}',", session.UserId);
+                data.AppendFormat("'{0}',", session.Quantity);
+                backgroundColor.AppendFormat("'{0}',", color);
+
+                lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
+                dataGraphic = data.ToString().Substring(0, data.Length - 1);
+                bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);
+            }
+        }
+
+
     }
 }

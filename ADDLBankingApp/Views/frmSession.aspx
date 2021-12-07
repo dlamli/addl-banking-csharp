@@ -117,6 +117,34 @@
         ForeColor="#FFF7F7"
         runat="server"
         Visible="false" />
+    
+        <%--Chartjs--%>
+    <div class="row">
+        <div class="col-sm">
+            <div id="canvas-holder" style="width: 40%">
+                <canvas id="vistas-chart"></canvas>
+            </div>
+            <script>
+                new Chart(document.getElementById("vistas-chart"), {
+                    type: 'pie',
+                    data: {
+                        labels: [<%= this.lblGraphic %>],
+                        datasets: [{
+                            label: "Sessions View by User ID'",
+                            backgroundColor: [<%= this.bgColorGraphic %>],
+                            data: [<%= this.dataGraphic %>]
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Sessions View by User ID'
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
 
     <!--Management Window -->
     <div id="myModalManagement" class="modal fade" role="dialog">
