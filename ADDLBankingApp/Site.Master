@@ -12,6 +12,8 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
@@ -37,85 +39,172 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
+        <style>
+body {
+  font-family: "Lato", sans-serif;
+}
 
+/* Fixed sidenav, full height */
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
 
-        <%--navbar-fixed-top--%>
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
 
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/Default.aspx">
-                        ADDL-Banking
-                    </a>
-                    <%--<img src="/Assets/Images/addl-logo-white.png" height="100" />--%>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Management
-                <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Views/frmAccount.aspx">Account</a></li>
-                            <li><a href="/Views/frmService.aspx">Service</a></li>
-                            <li><a href="/Views/frmCurrency.aspx">Currency</a></li>
-                            <li><a href="/Views/frmCard.aspx">Card</a></li>
-                            <li><a href="/Views/frmRole.aspx">Role</a></li>
-                            <li><a href="/Views/frmCustomer.aspx">Customer</a></li>
-                            <li><a href="/Views/frmCardRequest.aspx">Card Request</a></li>
-                            <li><a href="/Views/frmLoan.aspx">Loan</a></li>
-                            <li><a href="/Views/frmMarchamo.aspx">Marchamo</a></li>
-                            <li><a href="/Views/frmSinpe.aspx">Sinpe</a></li>
-                            <li><a href="/Views/frmTimeDeposit.aspx">Time Deposit</a></li>
-                            <li><a href="/Views/frmUtility.aspx">Utility</a></li>
-                            <li><a href="/Views/frmTransfer.aspx">Transfer</a></li>
-                            <li><a href="/Views/frmPayment.aspx">Payment</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tasks
-                <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>In maintenance</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports
-                <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>In maintenance</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Logs
-                <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Views/frmErrorLog.aspx">Error Log</a></li>
-                            <li><a href="/Views/frmSession.aspx">Session</a></li>
-                            <li><a href="/Views/frmStadistic.aspx">Stadistic</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <asp:LinkButton ID="lnkSignOut" OnClick="lnkSignOut_Click" runat="server">Sign out</asp:LinkButton>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
 
-        <%--<div class="sidebar navbar-fixed-top"><a class="active" href="#home">Home</a>   <a href="#news">News</a>   <a href="#contact">Contact</a>   <a href="#about">About</a> </div>
-        <div class="content">
-            <h2>Responsive Sidebar Example</h2>
-            <p>This example use media queries to transform the sidebar to a top navigation bar when the screen size is 700px or less.</p>
-            <p>We have also added a media query for screens that are 400px or less, which will vertically stack and center the navigation links.</p>
-            <h3>Resize the browser window to see the effect.</h3>
-        </div>--%>
+/* Main content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: #204969;
+  color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  .sidenav {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidenav a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidenav a {
+    text-align: center;
+    float: none;
+  }
+}
+
+/* Some media queries for responsiveness */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+    <div class="sidenav">
+        <a href="/Default.aspx">
+            <img src="/Assets/Images/addl-logo-white.png" style="width: 100%;"/>
+        </a>
+        <a href="/Default.aspx">Home</a>
+        <button class="dropdown-btn" type="button">
+            Management 
+        <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="/Views/frmAccount.aspx">Account</a>
+            <a href="/Views/frmService.aspx">Service</a>
+            <a href="/Views/frmCurrency.aspx">Currency</a>
+            <a href="/Views/frmCard.aspx">Card</a>
+            <a href="/Views/frmRole.aspx">Role</a>
+            <a href="/Views/frmCustomer.aspx">Customer</a>
+            <a href="/Views/frmCardRequest.aspx">Card Request</a>
+            <a href="/Views/frmLoan.aspx">Loan</a>
+            <a href="/Views/frmMarchamo.aspx">Marchamo</a>
+            <a href="/Views/frmSinpe.aspx">Sinpe</a>
+            <a href="/Views/frmTimeDeposit.aspx">Time Deposit</a>
+            <a href="/Views/frmUtility.aspx">Utility</a>
+            <a href="/Views/frmTransfer.aspx">Transfer</a>
+            <a href="/Views/frmPayment.aspx">Payment</a>
+        </div>
+        <button class="dropdown-btn" type="button">
+            Tasks 
+        <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="/Views/frmAccount.aspx">In maintenance</a>
+        </div>
+        <button class="dropdown-btn" type="button">
+            Reports 
+        <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="/Views/frmAccount.aspx">In maintenance</a>
+        </div>
+        <button class="dropdown-btn" type="button">
+            Logs 
+        <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="/Views/frmErrorLog.aspx">Error Log</a>
+            <a href="/Views/frmSession.aspx">Session</a>
+            <a href="/Views/frmStadistic.aspx">Stadistic</a>
+        </div>
+        <asp:LinkButton ID="lnkSignOut" OnClick="lnkSignOut_Click" runat="server">Sign out</asp:LinkButton>
+    </div>
+
+    <script>
+        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+
+        var dropSubMenus = document.getElementsByClassName("dropdown-btn");
+
+        for (var i = 0; i < dropSubMenus.length; i++) {
+            dropSubMenus[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
 
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%: DateTime.Now.Year %> - ADDL Banking 2021.</p>
             </footer>
         </div>
 
