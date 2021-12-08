@@ -28,15 +28,13 @@ namespace ADDLBankingApp.Views
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null)
-                {
-                    Response.Redirect("~/Login.aspx");
-                }
+                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
                 else
                 {
                     accounts = await accountManager.GetAllAccount(Session["Token"].ToString());
                     init();
                     getDataGraphic();
+
                     using (SqlConnection conn = new SqlConnection(connString))
                     {
                         conn.Open();
@@ -136,11 +134,12 @@ namespace ADDLBankingApp.Views
                       Quantity = group.Count()
                   }).OrderBy(c => c.Status))
             {
+
                 string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
-                labels.AppendFormat("'{0}',", account.Status);
                 data.AppendFormat("'{0}',", account.Quantity);
                 backgroundColor.AppendFormat("'{0}',", color);
 
+                labels.AppendFormat("'{0}',", account.Status);
                 lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
                 dataGraphic = data.ToString().Substring(0, data.Length - 1);
                 bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);

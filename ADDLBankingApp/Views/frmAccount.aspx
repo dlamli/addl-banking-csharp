@@ -139,7 +139,7 @@
     <%--Chartjs--%>
     <div class="row">
         <div class="col-sm">
-            <div id="canvas-holder" style="width: 40%">
+            <div id="canvas-holder" style="width: 40%; margin: 0 auto;">
                 <canvas id="vistas-chart"></canvas>
             </div>
             <script>

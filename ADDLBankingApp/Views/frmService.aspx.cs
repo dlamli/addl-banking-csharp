@@ -63,15 +63,15 @@ namespace ADDLBankingApp.Views
             StringBuilder backgroundColor = new StringBuilder();
             var random = new Random();
 
-            foreach (var service in services.GroupBy(e => e.Status)
+            foreach (var service in services.GroupBy(e => e.Description)
                   .Select(group => new
                   {
-                      Status = group.Key,
+                      Description = group.Key,
                       Quantity = group.Count()
-                  }).OrderBy(c => c.Status))
+                  }).OrderBy(c => c.Description))
             {
                 string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
-                labels.AppendFormat("'{0}',", service.Status);
+                labels.AppendFormat("'{0}',", service.Description);
                 data.AppendFormat("'{0}',", service.Quantity);
                 backgroundColor.AppendFormat("'{0}',", color);
 

@@ -64,11 +64,6 @@
     </script>
 
     <h1>Loan Management</h1>
-    <input
-        id="myInput"
-        placeholder="Search"
-        class="form-control"
-        type="text" />
 
     <asp:GridView
         ID="gvLoan"
@@ -130,7 +125,7 @@
     <!--Gráfico-->
     <div class="row">
         <div class="col-sm">
-            <div id="canvas-holder" style="width: 40%;margin: 0 auto;">
+            <div id="canvas-holder" style="width: 40%; margin: 0 auto;">
                 <canvas id="vistas-chart"></canvas>
             </div>
             <script>
