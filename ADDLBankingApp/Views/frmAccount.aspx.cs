@@ -3,19 +3,14 @@ using ADDLBankingApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
-using System.Web;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.IO;
-using iTextSharp.text.html.simpleparser;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
-using System.Text;
 
 namespace ADDLBankingApp.Views
 {
@@ -25,15 +20,23 @@ namespace ADDLBankingApp.Views
         AccountManager accountManager = new AccountManager();
         string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
 
+        public string lblGraphic = string.Empty;
+        public string bgColorGraphic = string.Empty;
+        public string dataGraphic = string.Empty;
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
+                if (Session["Id"] == null)
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
                 else
                 {
+                    accounts = await accountManager.GetAllAccount(Session["Token"].ToString());
                     init();
+                    getDataGraphic();
                     using (SqlConnection conn = new SqlConnection(connString))
                     {
                         conn.Open();
@@ -96,7 +99,6 @@ namespace ADDLBankingApp.Views
         {
             try
             {
-                accounts = await accountManager.GetAllAccount(Session["Token"].ToString());
                 gvAccount.DataSource = accounts.ToList();
                 gvAccount.DataBind();
             }
@@ -117,6 +119,31 @@ namespace ADDLBankingApp.Views
                     Action = "init",
                 };
                 await errorManager.insertErrorLog(error);
+            }
+        }
+
+        private void getDataGraphic()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColor = new StringBuilder();
+            var random = new Random();
+
+            foreach (var account in accounts.GroupBy(e => e.Status)
+                  .Select(group => new
+                  {
+                      Status = group.Key,
+                      Quantity = group.Count()
+                  }).OrderBy(c => c.Status))
+            {
+                string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
+                labels.AppendFormat("'{0}',", account.Status);
+                data.AppendFormat("'{0}',", account.Quantity);
+                backgroundColor.AppendFormat("'{0}',", color);
+
+                lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
+                dataGraphic = data.ToString().Substring(0, data.Length - 1);
+                bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);
             }
         }
 

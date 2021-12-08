@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
-using System.Web;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
@@ -20,21 +20,32 @@ namespace ADDLBankingApp.Views
         RoleManager roleManager = new RoleManager();
         static string _id = string.Empty;
 
-        protected void Page_Load(object sender, EventArgs e)
+        public string lblGraphic = string.Empty;
+        public string bgColorGraphic = string.Empty;
+        public string dataGraphic = string.Empty;
+
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
-                else init();
+                if (Session["Id"] == null)
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
+                else
+                {
+                    roles = await roleManager.GetAllRole(Session["Token"].ToString());
+                    init();
+                    getDataGraphic();
+                }
             }
         }
 
 
-        public async void init()
+        public void init()
         {
             try
             {
-                roles = await roleManager.GetAllRole(Session["Token"].ToString());
                 gvRole.DataSource = roles.ToList();
                 gvRole.DataBind();
             }
@@ -42,6 +53,31 @@ namespace ADDLBankingApp.Views
             {
                 lblStatus.Text = "An error ocurred  to load role list.";
                 lblStatus.Visible = true;
+            }
+        }
+
+        private void getDataGraphic()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColor = new StringBuilder();
+            var random = new Random();
+
+            foreach (var role in roles.GroupBy(e => e.Name)
+                  .Select(group => new
+                  {
+                      Name = group.Key,
+                      Quantity = group.Count()
+                  }).OrderBy(c => c.Name))
+            {
+                string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
+                labels.AppendFormat("'{0}',", role.Name);
+                data.AppendFormat("'{0}',", role.Quantity);
+                backgroundColor.AppendFormat("'{0}',", color);
+
+                lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
+                dataGraphic = data.ToString().Substring(0, data.Length - 1);
+                bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);
             }
         }
 

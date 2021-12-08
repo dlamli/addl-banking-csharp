@@ -11,24 +11,34 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace ADDLBankingApp.Views
 {
     public partial class CardRequest : System.Web.UI.Page
     {
 
-        IEnumerable<Models.CardRequest> cardRequest = new ObservableCollection<Models.CardRequest>();
+        IEnumerable<Models.CardRequest> cardRequests = new ObservableCollection<Models.CardRequest>();
         CardRequestManager cardRequestManager = new CardRequestManager();
         static string _id = string.Empty;
 
-        protected void Page_Load(object sender, EventArgs e)
+        public string lblGraphic = string.Empty;
+        public string bgColorGraphic = string.Empty;
+        public string dataGraphic = string.Empty;
+
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
+                if (Session["Id"] == null)
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
                 else
                 {
+                    cardRequests = await cardRequestManager.GetAllCardRequest(Session["Token"].ToString());
                     init();
+                    GetDataGraphic();
                     string connString = ConfigurationManager.ConnectionStrings["ADDL-BANKING"].ConnectionString;
 
                     using (SqlConnection conn = new SqlConnection(connString))
@@ -54,14 +64,38 @@ namespace ADDLBankingApp.Views
         {
             try
             {
-                cardRequest = await cardRequestManager.GetAllCardRequest(Session["Token"].ToString());
-                gvCardRequest.DataSource = cardRequest.ToList();
+                gvCardRequest.DataSource = cardRequests.ToList();
                 gvCardRequest.DataBind();
             }
             catch (Exception)
             {
                 lblStatus.Text = "An error ocurred  to load card request list.";
                 lblStatus.Visible = true;
+            }
+        }
+
+        private void GetDataGraphic()
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder data = new StringBuilder();
+            StringBuilder backgroundColor = new StringBuilder();
+            var random = new Random();
+
+            foreach (var cardRequest in cardRequests.GroupBy(e => e.AccountId)
+                  .Select(group => new
+                  {
+                      Provider = group.Key,
+                      Quantity = group.Count()
+                  }).OrderBy(c => c.Provider))
+            {
+                string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
+                labels.AppendFormat("'{0}',", cardRequest.Provider);
+                data.AppendFormat("'{0}',", cardRequest.Quantity);
+                backgroundColor.AppendFormat("'{0}',", color);
+
+                lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
+                dataGraphic = data.ToString().Substring(0, data.Length - 1);
+                bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);
             }
         }
 
@@ -86,7 +120,7 @@ namespace ADDLBankingApp.Views
 
                 case "removeCardRequest":
                     _id = row.Cells[0].Text.Trim();
-                    ltrModalMsg.Text = "Are you sure want to remove card request #" + _id  +" ?";
+                    ltrModalMsg.Text = "Are you sure want to remove card request #" + _id + " ?";
                     ScriptManager.RegisterStartupScript(this,
                this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
                     break;
