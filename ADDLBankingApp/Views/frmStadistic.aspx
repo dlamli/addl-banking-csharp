@@ -1,9 +1,10 @@
 ﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmStadistic.aspx.cs" Inherits="ADDLBankingApp.Views.frmStadistic" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
@@ -41,11 +42,6 @@
 
     <h1>Stadistic</h1>
 
-<input
-        id="myInput"
-        placeholder="Search"
-        class="form-control"
-        type="text" />
     <asp:GridView
         ID="gvStadistic"
         runat="server"
@@ -54,17 +50,16 @@
         HeaderStyle-CssClass="thead-dark"
         HeaderStyle-BackColor="#204969"
         HeaderStyle-ForeColor="#FFF7F7"
-        AlternatingRowStyle-BackColor="#DADADA"
-        >
+        AlternatingRowStyle-BackColor="#DADADA">
 
         <Columns>
-             <asp:BoundField
+            <asp:BoundField
                 HeaderText="Id"
                 DataField="Id" />
             <asp:BoundField
                 HeaderText="UserId"
                 DataField="UserId" />
-             <asp:BoundField
+            <asp:BoundField
                 HeaderText="Date"
                 DataField="Date" />
             <asp:BoundField
@@ -80,7 +75,7 @@
                 HeaderText="Action"
                 DataField="Action" />
 
-        
+
         </Columns>
 
     </asp:GridView>
@@ -92,8 +87,8 @@
         Visible="false" />
 
 
-    
-        <%--Chartjs--%>
+
+    <%--Chartjs--%>
     <div class="row">
         <div class="col-sm">
             <div id="canvas-holder" style="width: 40%">

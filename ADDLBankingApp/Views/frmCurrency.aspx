@@ -63,11 +63,6 @@
     </script>
 
     <h1>Currency Management</h1>
-    <input
-        id="myInput"
-        placeholder="Search"
-        class="form-control"
-        type="text" />
     <asp:GridView
         ID="gvCurrency"
         runat="server"

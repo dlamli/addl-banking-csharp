@@ -81,7 +81,7 @@ namespace ADDLBankingApp.Views
             StringBuilder backgroundColor = new StringBuilder();
             var random = new Random();
 
-            foreach (var cardRequest in cardRequests.GroupBy(e => e.AccountId)
+            foreach (var cardRequest in cardRequests.GroupBy(e => e.RequestDate)
                   .Select(group => new
                   {
                       Provider = group.Key,

@@ -26,10 +26,7 @@ namespace ADDLBankingApp.Views
         {
             if (!IsPostBack)
             {
-                if (Session["Id"] == null)
-                {
-                    Response.Redirect("~/Login.aspx");
-                }
+                if (Session["Id"] == null) Response.Redirect("~/Login.aspx");
                 else
                 {
                     cards = await cardManager.GetAllCard(Session["Token"].ToString());

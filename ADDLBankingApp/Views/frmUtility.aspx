@@ -5,7 +5,7 @@
 
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
@@ -66,12 +66,8 @@
     </script>
 
 
-<h1>Utility Management</h1>
-    <input
-        id="myInput"
-        placeholder="Search"
-        class="form-control"
-        type="text" />
+    <h1>Utility Management</h1>
+
     <asp:GridView
         ID="gvUtility"
         runat="server"
@@ -81,11 +77,10 @@
         HeaderStyle-BackColor="#204969"
         HeaderStyle-ForeColor="#FFF7F7"
         AlternatingRowStyle-BackColor="#DADADA"
-        OnRowCommand="gvUtility_RowCommand"
-        >
+        OnRowCommand="gvUtility_RowCommand">
 
         <Columns>
-             <asp:BoundField
+            <asp:BoundField
                 HeaderText="Id"
                 DataField="Id" />
             <asp:BoundField
@@ -94,7 +89,7 @@
             <asp:BoundField
                 HeaderText="ProfitPercentage"
                 DataField="ProfitPercentage" />
-             <asp:ButtonField
+            <asp:ButtonField
                 HeaderText="Edit"
                 CommandName="editUtility"
                 ControlStyle-CssClass="btn btn-primary"
@@ -116,8 +111,7 @@
         runat="server"
         Text="<span aria-hidden='true' glyphicon glyphicon-plus ></span> New"
         OnClick="btnNew_Click"
-        CausesValidation="false"
-        />
+        CausesValidation="false" />
     <asp:Label
         ID="lblStatus"
         ForeColor="#FFF7F7"
@@ -157,17 +151,16 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         class="close"
-                        data-dismiss="modal"
-                        >&times;
+                        data-dismiss="modal">
+                        &times;
                     </button>
                     <h4 class="modal-title">
-                        <asp:Literal 
+                        <asp:Literal
                             ID="ltrTitleManagement"
-                            runat="server"
-                            ></asp:Literal>
+                            runat="server"></asp:Literal>
                     </h4>
                 </div>
                 <div class="modal-body">
@@ -185,8 +178,8 @@
                                     Enabled="false"
                                     CssClass="form-control" />
                             </td>
-   
-                        </tr>                    
+
+                        </tr>
                         <tr>
                             <td>
                                 <asp:Literal
@@ -201,7 +194,7 @@
                                 </asp:DropDownList>
                             </td>
                         </tr>
-                                <tr>
+                        <tr>
                             <td>
                                 <asp:Literal
                                     ID="ltrProfitPercentage"
@@ -213,16 +206,15 @@
                                     runat="server"
                                     MaxLength="2"
                                     CssClass="form-control" />
-                                <asp:RequiredFieldValidator 
-                                    ID="rfvProfitPercentage" 
+                                <asp:RequiredFieldValidator
+                                    ID="rfvProfitPercentage"
                                     runat="server"
                                     ForeColor="Red"
-                                    ControlToValidate="txtProfitPercentage" 
+                                    ControlToValidate="txtProfitPercentage"
                                     EnableClientScript="true"
                                     ErrorMessage="ProfitPercentage is required"
                                     Display="Dynamic"
-                                    SetFocusOnError="True" 
-                                    ></asp:RequiredFieldValidator>   
+                                    SetFocusOnError="True"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator
                                     ID="revProfitPercentage"
                                     runat="server"
@@ -236,30 +228,27 @@
                         </tr>
 
                     </table>
-                    <asp:Label 
+                    <asp:Label
                         ID="lblResult"
                         ForeColor="#FFF7F7"
-                        Visible="False" 
-                        runat="server"
-                        />
+                        Visible="False"
+                        runat="server" />
                 </div>
                 <div class="modal-footer">
-                    <asp:LinkButton 
+                    <asp:LinkButton
                         type="button"
-                        OnClick="btnConfirmManagement_Click" 
-                        CssClass="btn btn-success" 
+                        OnClick="btnConfirmManagement_Click"
+                        CssClass="btn btn-success"
                         ID="btnConfirmManagement"
-                        runat="server" 
-                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm"
-                        />
-                    <asp:LinkButton 
-                        type="button" 
-                        OnClick="btnCancelManagement_Click" 
-                        CssClass="btn btn-danger" 
+                        runat="server"
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm" />
+                    <asp:LinkButton
+                        type="button"
+                        OnClick="btnCancelManagement_Click"
+                        CssClass="btn btn-danger"
                         ID="btnCancelManagement"
-                        runat="server" 
-                        Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel"
-                        />
+                        runat="server"
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel" />
                 </div>
             </div>
         </div>
@@ -270,50 +259,46 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button 
-                        type="button" 
-                        class="close" 
-                        data-dismiss="modal"
-                        >&times;</button>
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal">
+                        &times;</button>
                     <h4 class="modal-title">Utility Management</h4>
                 </div>
                 <div class="modal-body">
                     <p>
-                        <asp:Literal 
-                            ID="ltrModalMsg" 
-                            runat="server"
-                            />
-                         <asp:Literal 
-                             ID="lblIdRemove" 
-                             runat="server" 
-                            />
+                        <asp:Literal
+                            ID="ltrModalMsg"
+                            runat="server" />
+                        <asp:Literal
+                            ID="lblIdRemove"
+                            runat="server" />
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <asp:LinkButton 
+                    <asp:LinkButton
                         type="button"
                         CssClass="btn btn-success"
                         ID="btnConfirmModal"
                         OnClick="btnConfirmModal_Click"
-                        runat="server" 
+                        runat="server"
                         CausesValidation="false"
-                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm"
-                        />
-                    <asp:LinkButton 
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Confirm" />
+                    <asp:LinkButton
                         type="button"
                         CssClass="btn btn-danger"
                         ID="btnCancelModal"
-                        OnClick="btnCancelModal_Click" 
+                        OnClick="btnCancelModal_Click"
                         runat="server"
                         CausesValidation="false"
-                        Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel" 
-                        />
+                        Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cancel" />
                 </div>
             </div>
         </div>
     </div>
 
-     <%--Modal Message--%>
+    <%--Modal Message--%>
     <div id="myModalMsg" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
