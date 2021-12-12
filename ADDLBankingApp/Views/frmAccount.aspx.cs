@@ -139,7 +139,16 @@ namespace ADDLBankingApp.Views
                 data.AppendFormat("'{0}',", account.Quantity);
                 backgroundColor.AppendFormat("'{0}',", color);
 
-                labels.AppendFormat("'{0}',", account.Status);
+                //labels.AppendFormat("'{0}',", account.Status);
+                if (account.Status.Equals("0"))
+                {
+                    labels.AppendFormat("'{0}',", "Inactive");
+                }
+                else
+                {
+                    labels.AppendFormat("'{0}',", "Active");
+                }
+
                 lblGraphic = labels.ToString().Substring(0, labels.Length - 1);
                 dataGraphic = data.ToString().Substring(0, data.Length - 1);
                 bgColorGraphic = backgroundColor.ToString().Substring(0, backgroundColor.Length - 1);

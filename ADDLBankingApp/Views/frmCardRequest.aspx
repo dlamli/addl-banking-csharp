@@ -141,7 +141,7 @@
                     data: {
                         labels: [<%= this.lblGraphic %>],
                         datasets: [{
-                            label: "CardRequest Account Id View",
+                            label: "CardRequest Month View",
                             backgroundColor: [<%= this.bgColorGraphic %>],
                             data: [<%= this.dataGraphic %>]
                         }]
@@ -149,7 +149,7 @@
                     options: {
                         title: {
                             display: true,
-                            text: 'CardRequest Account Id View'
+                            text: 'CardRequest Month View'
                         }
                     }
                 });

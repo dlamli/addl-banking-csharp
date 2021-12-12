@@ -81,15 +81,16 @@ namespace ADDLBankingApp.Views
             StringBuilder backgroundColor = new StringBuilder();
             var random = new Random();
 
-            foreach (var cardRequest in cardRequests.GroupBy(e => e.RequestDate)
+            foreach (var cardRequest in cardRequests.GroupBy(e => e.RequestDate.ToString("MMMM"))
                   .Select(group => new
                   {
-                      Provider = group.Key,
+                      RequestDateMonth = group.Key,
                       Quantity = group.Count()
-                  }).OrderBy(c => c.Provider))
+                  }).OrderBy(c => c.RequestDateMonth))
             {
+
                 string color = String.Format("#{0:X}", random.Next(0, 0x1000000));
-                labels.AppendFormat("'{0}',", cardRequest.Provider);
+                labels.AppendFormat("'{0}',", cardRequest.RequestDateMonth);
                 data.AppendFormat("'{0}',", cardRequest.Quantity);
                 backgroundColor.AppendFormat("'{0}',", color);
 
