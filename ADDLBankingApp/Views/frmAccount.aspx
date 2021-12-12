@@ -18,7 +18,7 @@
                 'iDisplayLength': 20,
                 buttons: [
                     { extend: 'copy', text: 'Copy to clipboard', className: 'exportExcel', exportOptions: { modifier: { page: 'all' } } },
-                    { extend: 'excel', text: 'Export to Excel', className: 'exportExcel', filename: 'Accounts_Excel', exportOptions: { modifier: { page: 'all' } } },
+                    { extend: 'excel', text: 'Export to Excel', className: 'exportExcel', filename: 'Acco9unts_Excel', exportOptions: { modifier: { page: 'all' } } },
                     { extend: 'csv', text: 'Export to CSV', className: 'exportExcel', filename: 'Accounts_Csv', exportOptions: { modifier: { page: 'all' } } },
                     { extend: 'pdf', text: 'Export to PDF', className: 'exportExcel', filename: 'Accounts_Pdf', orientation: 'landscape', pageSize: 'LEGAL', exportOptions: { modifier: { page: 'all' }, columns: ':visible' } }
                 ]

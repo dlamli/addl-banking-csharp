@@ -155,7 +155,7 @@
                     data: {
                         labels: [<%= this.lblGraphic %>],
                         datasets: [{
-                            label: "Card View",
+                            label: "Card Provider View",
                             backgroundColor: [<%= this.bgColorGraphic %>],
                             data: [<%= this.dataGraphic %>]
                         }]
@@ -163,7 +163,7 @@
                     options: {
                         title: {
                             display: true,
-                            text: 'Card View'
+                            text: 'Card Provider View'
                         }
                     }
                 });
